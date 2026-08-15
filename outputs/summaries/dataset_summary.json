@@ -1,0 +1,14 @@
+{
+    "dataset": "QASPER",
+    "splits": {
+        "train": 888,
+        "test": 416,
+        "validation": 281
+    },
+    "total_papers": 1585,
+    "total_questions": 5049,
+    "total_evidence_items": 12761,
+    "average_document_words": 3572.845425867508,
+    "average_question_words": 8.13903743315508,
+    "generated_chunks": 29360
+}
