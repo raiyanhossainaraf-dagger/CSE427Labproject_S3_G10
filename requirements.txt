@@ -1,0 +1,9 @@
+pandas
+numpy
+matplotlib
+seaborn
+datasets
+pyarrow
+tqdm
+scikit-learn
+pathlib
