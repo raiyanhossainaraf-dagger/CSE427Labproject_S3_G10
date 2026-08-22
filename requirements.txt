@@ -1,3 +1,4 @@
+rank-bm25
 pandas
 numpy
 matplotlib
@@ -7,3 +8,7 @@ pyarrow
 tqdm
 scikit-learn
 pathlib
+ipywidgets
+torch
+sentence-transformers
+faiss-cpu
