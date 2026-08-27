@@ -19,6 +19,5 @@
     "final_notebook_status": "planned_for_T27",
     "faculty_delivery_requirement": "Notebook must run top-to-bottom in fresh Colab runtime directly from GitHub.",
     "hidden_local_state_allowed": false,
-    "absolute_local_paths_allowed": false,
-    "manual_colab_verification_status": "pending_user_check"
+    "absolute_local_paths_allowed": false
 }
