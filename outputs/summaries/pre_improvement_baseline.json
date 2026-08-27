@@ -1,0 +1,75 @@
+{
+    "project_title": "Evidence-Aware Multi-Agent Retrieval-Augmented Generation for Scientific Literature Review",
+    "baseline_status": "preliminary",
+    "source_notebook": "notebooks/CSE427_Milestone3.ipynb",
+    "source_metrics_file": "outputs/tables/model_comparison.csv",
+    "evaluation_question_count": 100,
+    "evaluation_split": "train",
+    "retrieval_models": [
+        "BM25",
+        "MiniLM-L6-v2 (Dense)",
+        "Weighted Hybrid (alpha=0.5)"
+    ],
+    "reported_metrics": {
+        "BM25": {
+            "Recall@5": 0.14942528735632185,
+            "Recall@10": 0.21839080459770116,
+            "MRR": 0.0931490603904397
+        },
+        "Dense": {
+            "Recall@5": 0.09195402298850575,
+            "Recall@10": 0.12643678160919541,
+            "MRR": 0.07033388067870826
+        },
+        "Hybrid": {
+            "Recall@5": 0.16091954022988506,
+            "Recall@10": 0.21839080459770116,
+            "MRR": 0.09300766283524904
+        }
+    },
+    "notebook_csv_differences": "none_observed",
+    "known_limitations": [
+        "First 100 questions only",
+        "Training split used for evaluation",
+        "Recall@K behaving as binary Hit@K",
+        "Approximate evidence text matching",
+        "No completed generation or multi-agent evaluation"
+    ],
+    "artifact_inventory": {
+        "milestone_notebooks": 3,
+        "source_modules": [
+            "bm25_retrieval.py",
+            "data_loader.py",
+            "eda_utils.py",
+            "embeddings.py",
+            "evaluation.py",
+            "hybrid_retrieval.py",
+            "preprocessing.py",
+            "rag_baseline.py",
+            "retrieval.py",
+            "utils.py",
+            "vector_store.py"
+        ],
+        "processed_artifacts": [
+            "chunks.parquet",
+            "chunk_embeddings.npy",
+            "chunk_metadata.parquet",
+            "evidence.parquet",
+            "papers.parquet",
+            "questions.parquet",
+            "faiss_index/index.faiss"
+        ],
+        "output_tables": [
+            "model_comparison.csv",
+            "paper_statistics.csv",
+            "quality_report.csv",
+            "question_statistics.csv"
+        ],
+        "figure_count": 12,
+        "qasper_raw_files_exist": true,
+        "embeddings_and_faiss_exist": true,
+        "tests_exist": false,
+        "final_faculty_notebook_exists": false
+    },
+    "not_for_final_reporting": true
+}

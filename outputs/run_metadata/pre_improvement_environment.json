@@ -1,0 +1,20 @@
+{
+    "timestamp_utc": "2026-08-28T04:08:00Z",
+    "git_branch": "task/t00-baseline-workflow",
+    "git_commit_hash": "434303842e02e6364958ca83f7a3858164d0f005",
+    "git_remote_url": "https://github.com/raiyanhossainaraf-dagger/CSE427Labproject_S3_G10.git",
+    "operating_system": "Windows",
+    "python_version": "3.12.6",
+    "package_versions": {
+        "pandas": "3.0.5",
+        "numpy": "2.5.2",
+        "scikit-learn": "1.9.0",
+        "sentence-transformers": "6.0.0",
+        "faiss": "1.15.0"
+    },
+    "cuda_availability": false,
+    "gpu_name": null,
+    "local_compile_check": "success",
+    "existing_test_result": "no_tests_found",
+    "notes": "CUDA not available in current environment. Optional heavy packages may be missing from local environment but are present in requirements.txt for Colab."
+}
