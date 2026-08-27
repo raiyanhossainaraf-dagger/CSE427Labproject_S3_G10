@@ -1,0 +1,8 @@
+-r requirements-retrieval.txt
+
+# LLM inference and quantization (optional)
+accelerate>=1.0.0
+sentencepiece
+safetensors
+# bitsandbytes is primarily for Linux/CUDA; usage on Windows may require specific wheels or WSL
+bitsandbytes>=0.43.0; sys_platform != "win32"

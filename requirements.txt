@@ -1,14 +1,1 @@
-rank-bm25
-pandas
-numpy
-matplotlib
-seaborn
-datasets
-pyarrow
-tqdm
-scikit-learn
-pathlib
-ipywidgets
-torch
-sentence-transformers
-faiss-cpu
+-r requirements-retrieval.txt

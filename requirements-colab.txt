@@ -1,0 +1,5 @@
+-r requirements-retrieval.txt
+
+# Colab-specific or version-stabilized requirements
+# Avoid forcing reinstall of PyTorch if Colab's version is sufficient
+torch>=2.0.0
