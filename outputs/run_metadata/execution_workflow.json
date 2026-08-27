@@ -1,0 +1,24 @@
+{
+    "development_environment": "PyCharm local",
+    "local_hardware_note": "Windows local machine",
+    "source_of_truth": "GitHub repository",
+    "full_experiment_environment": "Google Colab",
+    "workflow_steps": [
+        "1. Junie develops and edits code locally in PyCharm.",
+        "2. Local syntax checks, unit tests and small smoke tests are run.",
+        "3. Changes are reviewed before committing.",
+        "4. Stable changes are pushed to GitHub.",
+        "5. The notebook is opened from GitHub in a fresh Google Colab runtime.",
+        "6. Relevant Colab cells are executed.",
+        "7. The executed notebook and small result files are saved.",
+        "8. Final notebook will be CSE427_Final_Multi_Agent_RAG.ipynb."
+    ],
+    "local_validation_required": true,
+    "fresh_colab_validation_required": true,
+    "final_faculty_notebook": "notebooks/CSE427_Final_Multi_Agent_RAG.ipynb",
+    "final_notebook_status": "planned_for_T27",
+    "faculty_delivery_requirement": "Notebook must run top-to-bottom in fresh Colab runtime directly from GitHub.",
+    "hidden_local_state_allowed": false,
+    "absolute_local_paths_allowed": false,
+    "manual_colab_verification_status": "pending_user_check"
+}
