@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+* (1).ipynb
+
+# Environments
+.venv/
+venv/
+env/
+.env
+.env.*
+!.env.example
+
+# IDEs
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Model and experiment caches
+.cache/
+cache/
+data/cache/
+models/
+checkpoints/
+wandb/
+mlruns/
+
+# Generated model weights
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+pytorch_model*.bin
+*.onnx
+
+# Generated embeddings and indexes (prevent new ones, but don't delete existing tracked ones)
+data/processed/*embedding*.npy
+data/processed/faiss_index/
+*.faiss
+
+# Temporary outputs
+outputs/run_metadata/dependency_environment.json

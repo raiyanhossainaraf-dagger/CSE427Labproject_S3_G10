@@ -1,0 +1,8 @@
+-r requirements-core.txt
+
+# Retrieval, embeddings, and vector stores
+rank-bm25>=0.2.2
+torch>=2.0.0
+transformers>=4.40.0
+sentence-transformers>=3.0.0
+faiss-cpu>=1.8.0
