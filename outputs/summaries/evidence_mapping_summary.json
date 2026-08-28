@@ -1,0 +1,16 @@
+{
+    "total_evidence": 12761,
+    "status_counts": {
+        "matched": 12732,
+        "ambiguous": 29,
+        "unmatched": 0
+    },
+    "matched_coverage": 0.9977274508267377,
+    "candidate_mapping_coverage": 1.0,
+    "mapping_rows": 13023,
+    "source_type_rows": {
+        "paragraph": 11427,
+        "float": 1098,
+        "section": 498
+    }
+}

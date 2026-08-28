@@ -2,7 +2,7 @@ from typing import Dict, Set, List, Optional
 import pandas as pd
 import hashlib
 
-SCHEMA_VERSION = "1.0.0"
+SCHEMA_VERSION = "1.1.0"
 
 SPLITS: Set[str] = {"train", "validation", "test"}
 
@@ -57,7 +57,12 @@ TABLE_SCHEMAS: Dict[str, List[str]] = {
     "figures_tables": [
         "float_id", "paper_id", "split", "float_index", 
         "file", "caption", "float_type"
-    ]
+    ],
+    "evidence_mappings": [
+        "mapping_id", "evidence_id", "paper_id", "split", "mapping_status",
+        "source_type", "section_id", "paragraph_id", "chunk_id", "float_id",
+        "candidate_count", "normalized_evidence_text"
+    ],
 }
 
 def validate_table(df: pd.DataFrame, table_name: str) -> None:
@@ -74,6 +79,8 @@ def validate_table(df: pd.DataFrame, table_name: str) -> None:
     id_col = f"{table_name.rstrip('s')}_id"
     if table_name == "figures_tables":
         id_col = "float_id"
+    elif table_name == "evidence_mappings":
+        id_col = "mapping_id"
         
     if id_col in df.columns:
         if not df[id_col].is_unique:
@@ -101,3 +108,6 @@ def generate_evidence_id(annotation_id: str, evidence_index: int) -> str:
 
 def generate_float_id(paper_id: str, float_index: int) -> str:
     return f"{paper_id}::float::{float_index}"
+
+def generate_mapping_id(evidence_id: str, source_type: str, source_id: str = "") -> str:
+    return get_stable_id(f"{evidence_id}|{source_type}|{source_id}")

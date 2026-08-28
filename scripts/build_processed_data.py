@@ -15,6 +15,8 @@ from src.data_loader import load_qasper_dataset
 from src.preprocessing import process_qasper_to_tables
 from src.schemas import validate_table, SCHEMA_VERSION
 from src.chunking import chunk_paragraphs
+from src.evidence_mapping import build_evidence_mappings
+from src.data_validation import validate_foreign_keys
 
 def build_processed_data(args):
     paths = get_project_paths(explicit_root=args.project_root)
@@ -28,6 +30,21 @@ def build_processed_data(args):
         validate_existing_tables(output_dir)
         return
 
+    if args.mapping_only:
+        print("Building exact evidence mappings from existing processed sources...")
+        names = ["papers", "sections", "paragraphs", "questions", "answers", "evidence", "figures_tables", "chunks"]
+        tables = {name: pd.read_parquet(output_dir / f"{name}.parquet") for name in names}
+        mappings_df = build_evidence_mappings(
+            tables["evidence"], tables["paragraphs"], tables["sections"], tables["figures_tables"], tables["chunks"]
+        )
+        tables["evidence_mappings"] = mappings_df
+        validate_table(mappings_df, "evidence_mappings")
+        validate_foreign_keys(tables)
+        mappings_df.to_parquet(output_dir / "evidence_mappings.parquet", index=False)
+        generate_evidence_mapping_summary(mappings_df, tables["evidence"], paths.summaries_dir)
+        print(f" - Saved evidence_mappings.parquet ({len(mappings_df)} rows)")
+        return
+
     print(f"Loading raw QASPER data from {raw_dir}...")
     ds = load_qasper_dataset(raw_dir)
     
@@ -39,7 +56,7 @@ def build_processed_data(args):
     for name, df in tables.items():
         validate_table(df, name)
     
-    # Cross-table foreign key validation
+    # Cross-table foreign key validation before derived tables are built.
     validate_foreign_keys(tables)
     
     # Save tables
@@ -59,22 +76,36 @@ def build_processed_data(args):
         tables["papers"],
         tokenizer_name=args.tokenizer_name,
         max_tokens=args.max_tokens,
-        overlap_tokens=args.overlap_tokens
+        overlap_tokens=args.overlap_tokens,
+        require_hf=True,
     )
     
     print("Validating chunks...")
     validate_chunks(chunks_df)
+    tables["chunks"] = chunks_df
+
+    print("Building exact evidence mappings (T05)...")
+    mappings_df = build_evidence_mappings(
+        tables["evidence"], tables["paragraphs"], tables["sections"], tables["figures_tables"], chunks_df
+    )
+    tables["evidence_mappings"] = mappings_df
+    validate_table(mappings_df, "evidence_mappings")
+    validate_foreign_keys(tables)
     
     # Save chunks
     chunks_file = output_dir / "chunks.parquet"
     chunks_df.to_parquet(chunks_file, index=False)
     print(f" - Saved chunks.parquet ({len(chunks_df)} rows)")
+    mappings_file = output_dir / "evidence_mappings.parquet"
+    mappings_df.to_parquet(mappings_file, index=False)
+    print(f" - Saved evidence_mappings.parquet ({len(mappings_df)} rows)")
     
     # Manifest generation
     generate_chunk_manifest(chunks_df, tables["paragraphs"], output_dir, args)
     
     # Chunking summary
     generate_chunking_summary(chunks_df, paths.summaries_dir, args)
+    generate_evidence_mapping_summary(mappings_df, tables["evidence"], paths.summaries_dir)
     
     print("Phase 2 complete.")
 
@@ -127,42 +158,37 @@ def generate_chunking_summary(chunks_df: pd.DataFrame, summary_dir: Path, args):
     print(f"Chunking summary saved to {summary_dir / 'chunking_summary.json'}")
 
 def validate_existing_tables(output_dir: Path):
-    table_names = ["papers", "sections", "paragraphs", "questions", "answers", "evidence", "figures_tables"]
+    table_names = ["papers", "sections", "paragraphs", "questions", "answers", "evidence", "figures_tables", "chunks", "evidence_mappings"]
+    tables = {}
     for name in table_names:
         file_path = output_dir / f"{name}.parquet"
         if not file_path.exists():
             print(f"Warning: {file_path} does not exist.")
             continue
         df = pd.read_parquet(file_path)
-        validate_table(df, name)
+        if name != "chunks":
+            validate_table(df, name)
+        else:
+            validate_chunks(df)
+        tables[name] = df
         print(f" - {name}.parquet is valid.")
+    validate_foreign_keys(tables)
 
-def validate_foreign_keys(tables: dict):
-    # sections.paper_id -> papers.paper_id
-    paper_ids = set(tables["papers"]["paper_id"])
-    
-    def check_fk(df, col, ref_set, df_name, ref_name):
-        invalid = set(df[col]) - ref_set
-        if invalid:
-            raise ValueError(f"Foreign key violation: {df_name}.{col} contains values not in {ref_name}.paper_id: {list(invalid)[:5]}")
-
-    check_fk(tables["sections"], "paper_id", paper_ids, "sections", "papers")
-    check_fk(tables["paragraphs"], "paper_id", paper_ids, "paragraphs", "papers")
-    check_fk(tables["questions"], "paper_id", paper_ids, "questions", "papers")
-    check_fk(tables["answers"], "paper_id", paper_ids, "answers", "papers")
-    check_fk(tables["figures_tables"], "paper_id", paper_ids, "figures_tables", "papers")
-    
-    # paragraphs.section_id -> sections.section_id
-    section_ids = set(tables["sections"]["section_id"])
-    check_fk(tables["paragraphs"], "section_id", section_ids, "paragraphs", "sections")
-    
-    # answers.question_id -> questions.question_id
-    question_ids = set(tables["questions"]["question_id"])
-    check_fk(tables["answers"], "question_id", question_ids, "answers", "questions")
-    
-    # evidence.answer_id -> answers.answer_id
-    answer_ids = set(tables["answers"]["answer_id"])
-    check_fk(tables["evidence"], "answer_id", answer_ids, "evidence", "answers")
+def generate_evidence_mapping_summary(mappings_df, evidence_df, summary_dir):
+    outcomes = mappings_df[["evidence_id", "mapping_status"]].drop_duplicates()
+    observed_counts = outcomes["mapping_status"].value_counts().to_dict()
+    counts = {status: int(observed_counts.get(status, 0)) for status in ("matched", "ambiguous", "unmatched")}
+    total = len(evidence_df)
+    summary = {
+        "total_evidence": total,
+        "status_counts": counts,
+        "matched_coverage": counts.get("matched", 0) / total if total else 1.0,
+        "candidate_mapping_coverage": (total - counts.get("unmatched", 0)) / total if total else 1.0,
+        "mapping_rows": len(mappings_df),
+        "source_type_rows": mappings_df["source_type"].value_counts().to_dict(),
+    }
+    with open(summary_dir / "evidence_mapping_summary.json", "w", encoding="utf-8") as f:
+        json.dump(summary, f, indent=4, ensure_ascii=False)
 
 def generate_schema_summary(tables: dict, summary_dir: Path):
     summary = {
@@ -188,6 +214,7 @@ if __name__ == "__main__":
     parser.add_argument("--max-tokens", type=int, default=384, help="Maximum tokens per chunk.")
     parser.add_argument("--overlap-tokens", type=int, default=32, help="Overlap tokens for split paragraphs.")
     parser.add_argument("--validate-only", action="store_true", help="Only validate existing processed tables.")
+    parser.add_argument("--mapping-only", action="store_true", help="Build T05 mappings from existing processed tables.")
     
     args = parser.parse_args()
     build_processed_data(args)

@@ -5,15 +5,19 @@ from src.schemas import get_stable_id
 
 class TokenizerAdapter:
     """Mock or adapter for a real tokenizer to avoid heavy downloads during tests."""
-    def __init__(self, tokenizer_name: str = "sentence-transformers/all-MiniLM-L6-v2", use_hf: bool = True):
+    def __init__(self, tokenizer_name: str = "sentence-transformers/all-MiniLM-L6-v2", use_hf: bool = True,
+                 require_hf: bool = False):
         self.tokenizer_name = tokenizer_name
         self._tokenizer = None
         if use_hf:
             try:
                 from transformers import AutoTokenizer
                 self._tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
-            except Exception:
-                pass
+            except Exception as exc:
+                if require_hf:
+                    raise RuntimeError(
+                        f"Configured tokenizer '{tokenizer_name}' is unavailable; refusing a non-reproducible fallback"
+                    ) from exc
 
     def tokenize(self, text: str) -> List[Union[int, str]]:
         if self._tokenizer:
@@ -42,9 +46,10 @@ def chunk_paragraphs(
     max_tokens: int = 384,
     overlap_tokens: int = 32,
     chunking_version: str = "1.0.0",
-    use_hf: bool = True
+    use_hf: bool = True,
+    require_hf: bool = False,
 ) -> pd.DataFrame:
-    tokenizer = TokenizerAdapter(tokenizer_name, use_hf=use_hf)
+    tokenizer = TokenizerAdapter(tokenizer_name, use_hf=use_hf, require_hf=require_hf)
     chunks = []
     
     # Metadata reservation (Title and Section name)
