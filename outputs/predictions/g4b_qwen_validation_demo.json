@@ -1,0 +1,1528 @@
+{
+  "summary": {
+    "model_name": "Qwen/Qwen2.5-1.5B-Instruct",
+    "model_device": "cuda",
+    "model_load_seconds": 13.732,
+    "local_files_only": false,
+    "generation_configuration": {
+      "do_sample": false,
+      "max_new_tokens": 256,
+      "batch_size": 1
+    },
+    "question_count": 5,
+    "status_counts": {
+      "accepted": 5
+    },
+    "critic_verdict_counts": {
+      "accept": 5
+    },
+    "deterministic_fallback_accepts": 0,
+    "critic_schema_failures": 0,
+    "citation_valid_results": 5,
+    "average_runtime_seconds": 6.92,
+    "wall_runtime_seconds": 34.621,
+    "hardware": {
+      "available": true,
+      "device": "NVIDIA GeForce RTX 4050 Laptop GPU",
+      "peak_memory_mb": 3677.01
+    }
+  },
+  "results": [
+    {
+      "question_id": "02428a8fec9788f6dc3a86b5d5f3aa679935678d",
+      "question": "How do they define robustness of a model?",
+      "paper_id": "1503.00841",
+      "split": "validation",
+      "query_plan": {
+        "question_id": "02428a8fec9788f6dc3a86b5d5f3aa679935678d",
+        "paper_id": "1503.00841",
+        "split": "validation",
+        "original_question": "How do they define robustness of a model?",
+        "normalized_question": "How do they define robustness of a model?",
+        "retrieval_query": "How do they define robustness of a model?",
+        "question_style": "free-form",
+        "rewritten": false
+      },
+      "selected_evidence": [
+        {
+          "citation_label": "E1",
+          "document_id": "903b5169742f42c84c2703efbfad625d25b49581c2e4bf8e3dfdcd0440a3772b",
+          "source_type": "chunk",
+          "source_id": "0d9d32a2d3d6cb184c8fbe30c204e29d70e947ea6a349a5105711c3c42b634bd",
+          "paper_id": "1503.00841",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Abstract",
+          "evidence_text": "prior knowledge has been shown very useful to address many natural language processing tasks. many approaches have been proposed to formalise a variety of knowledge, however, whether the proposed approach is robust or sensitive to the knowledge supplied to the model has rarely been discussed. in this paper, we propose three regularization terms on top of generalized expectation criteria, and conduct extensive experiments to justify the robustness of the proposed methods. experimental results demonstrate that our proposed methods obtain remarkable improvements and are much more robust than baselines.",
+          "final_rank": 1,
+          "final_evidence_score": 0.9836919983094616,
+          "cross_encoder_score": 2.4395995140075684,
+          "normalized_cross_encoder_score": 1.0,
+          "normalized_hybrid_score": 0.9347679932378468,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 3,
+          "hybrid_score": 0.0315136476426799,
+          "bm25_score": 3.398901141380152,
+          "bm25_rank": 5,
+          "dense_score": 0.7106101512908936,
+          "dense_rank": 2,
+          "chunk_id": "0d9d32a2d3d6cb184c8fbe30c204e29d70e947ea6a349a5105711c3c42b634bd",
+          "paragraph_id": "1503.00841::section::abstract::0::paragraph::0",
+          "section_id": "1503.00841::section::abstract::0",
+          "figure_table_id": ""
+        },
+        {
+          "citation_label": "E2",
+          "document_id": "09be3e5fca61d918096cc98147510fd80bf8791ed3a0a419a38f83627e4c1030",
+          "source_type": "chunk",
+          "source_id": "1d7ccf360c46cdd6e64ea8d6a5feb9cf7c604ef5d314368aadadeeb4eba3533a",
+          "paper_id": "1503.00841",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Related Work",
+          "evidence_text": "mann and mccallum simple, generalized incorporated not only labeled features but also other knowledge like class distribution into the objective function of ge - fl. but they discussed only from the semi - supervised perspective and did not investigate into the robustness problem, unlike what we addressed in this paper. there are also some active learning methods trying to use prior knowledge. raghavan et al. feedback proposed to use feedback on instances and features interlacedly, and demonstrated that feedback on features boosts the model much. druck et al. active proposed an active learning method which solicits labels on features rather than on instances and then used ge - fl to train the model.",
+          "final_rank": 2,
+          "final_evidence_score": 0.9338300648786937,
+          "cross_encoder_score": 1.5708553791046143,
+          "normalized_cross_encoder_score": 0.9213295132775366,
+          "normalized_hybrid_score": 0.9555976223376719,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 2,
+          "hybrid_score": 0.031754032258064516,
+          "bm25_score": 4.966602140766693,
+          "bm25_rank": 2,
+          "dense_score": 0.6887768507003784,
+          "dense_rank": 4,
+          "chunk_id": "1d7ccf360c46cdd6e64ea8d6a5feb9cf7c604ef5d314368aadadeeb4eba3533a",
+          "paragraph_id": "",
+          "section_id": "1503.00841::section::full_text::12",
+          "figure_table_id": ""
+        },
+        {
+          "citation_label": "E3",
+          "document_id": "04746fa3e68f0e915ea222aa483db7a17ce4c9bc194317e5766fa889a2dfd4a3",
+          "source_type": "chunk",
+          "source_id": "ea05a9ea25c9b8a965378b4d2b65b3074f9c281edbbecdd69eae7bd5e7dd02ca",
+          "paper_id": "1503.00841",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Conclusion and Discussions",
+          "evidence_text": "this paper investigates into the problem of how to leverage prior knowledge robustly in learning models. we propose three regularization terms on top of generalized expectation criteria. as demonstrated by the experimental results, the performance can be considerably improved when taking into account these factors. comparative results show that our proposed methods is more effective and works more robustly against baselines. to the best of our knowledge, this is the first work to address the robustness problem of leveraging knowledge, and may inspire other research. we then present more detailed discussions about the three regularization methods. incorporating neutral features is the simplest way of regularization, which doesn ' t require any modification of ge - fl but just finding out some common features. but as figure 1 ( a ) shows, only using neutral features are not strong enough to handle extremely unbalanced labeled features. the maximum entropy regularization term shows the strong ability of controlling unbalance. this method doesn ' t need any extra knowledge, and is thus suitable when we know nothing about the corpus. but this method assumes that the categories are uniformly distributed, which may not be the case in practice, and it will have a degraded performance if the assumption is violated ( see figure 1 ( b ), figure 2 ( b ), figure 3 ( a ) ). the kl divergence performs much better on unbalanced corpora than other methods. the reason is that kl divergence utilizes the reference class distribution and doesn ' t make any assumptions. the fact suggests that additional knowledge does benefit the model.",
+          "final_rank": 3,
+          "final_evidence_score": 0.882124082636377,
+          "cross_encoder_score": 0.8426610231399536,
+          "normalized_cross_encoder_score": 0.8553867320710884,
+          "normalized_hybrid_score": 0.9334134807464602,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 4,
+          "hybrid_score": 0.03149801587301587,
+          "bm25_score": 3.6343473509292843,
+          "bm25_rank": 4,
+          "dense_score": 0.6904736757278442,
+          "dense_rank": 3,
+          "chunk_id": "ea05a9ea25c9b8a965378b4d2b65b3074f9c281edbbecdd69eae7bd5e7dd02ca",
+          "paragraph_id": "",
+          "section_id": "1503.00841::section::full_text::13",
+          "figure_table_id": ""
+        },
+        {
+          "citation_label": "E4",
+          "document_id": "e6f06f0ecca79ace911fb497a034c78f525d767390846086a8c01e55ddf455bd",
+          "source_type": "chunk",
+          "source_id": "ca621c8f1b1c7b43661aa81fa7883bb3e2e03d5b831e9771244fc5622a1bcdc3",
+          "paper_id": "1503.00841",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Method",
+          "evidence_text": "we address the robustness problem on top of ge - fl bibref0, a ge method which leverages labeled features as prior knowledge. a labeled feature is a strong indicator of a specific class and is manually provided to the classifier. for example, words like amazing, exciting can be labeled features for class positive in sentiment classification.",
+          "final_rank": 4,
+          "final_evidence_score": 0.8471438443094267,
+          "cross_encoder_score": 0.028223473578691483,
+          "normalized_cross_encoder_score": 0.781634063299181,
+          "normalized_hybrid_score": 1.0,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 1,
+          "hybrid_score": 0.032266458495966696,
+          "bm25_score": 3.657223441003755,
+          "bm25_rank": 3,
+          "dense_score": 0.7275571823120117,
+          "dense_rank": 1,
+          "chunk_id": "ca621c8f1b1c7b43661aa81fa7883bb3e2e03d5b831e9771244fc5622a1bcdc3",
+          "paragraph_id": "1503.00841::section::full_text::1::paragraph::0",
+          "section_id": "1503.00841::section::full_text::1",
+          "figure_table_id": ""
+        },
+        {
+          "citation_label": "E5",
+          "document_id": "89c2b825fc6c5bf7bce0f7bdd33d2ae15a1cf3d93a8614e1fcabbed1050c1f38",
+          "source_type": "chunk",
+          "source_id": "f34d726fd600b797c2a6c85fcbe988112a92bbc6d4d521b8150e7adbc91f027d",
+          "paper_id": "1503.00841",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Introduction",
+          "evidence_text": "in this paper, we investigate into the problem in the framework of generalized expectation criteria bibref7. the study aims to reveal the factors of reducing the sensibility of the prior knowledge and therefore to make the model more robust and practical. to this end, we introduce auxiliary regularization terms in which our prior knowledge is formalized as distribution over output variables. recall the example just mentioned, though we do not have enough knowledge to provide features for class hockey, it is easy for us to provide some neutral words, namely words that are not strong indicators of any class, like player here. as one of the factors revealed in this paper, supplying neutral feature words can boost the performance remarkably, making the model more robust. more attractively, we do not need manual annotation to label these neutral feature words in our proposed approach. more specifically, we explore three regularization terms to address the problem : ( 1 ) a regularization term associated with neutral features ; ( 2 ) the maximum entropy of class distribution regularization term ; and ( 3 ) the kl divergence between reference and predicted class distribution. for the first manner, we simply use the most common features as neutral features and assume the neutral features are distributed uniformly over class labels. for the second and third one, we assume we have some knowledge about the class distribution which will be detailed soon later. to summarize, the main contributions of this work are as follows : the rest of the paper is structured as follows : in section 2, we briefly describe the generalized expectation criteria and present the proposed regularization terms. in section 3, we conduct extensive experiments to justify the proposed methods. we survey related work in section 4, and summarize our work in section 5.",
+          "final_rank": 5,
+          "final_evidence_score": 0.7945481985371401,
+          "cross_encoder_score": -0.13051338493824005,
+          "normalized_cross_encoder_score": 0.7672593982872361,
+          "normalized_hybrid_score": 0.8298664789442992,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 5,
+          "hybrid_score": 0.030303030303030304,
+          "bm25_score": 3.2833670581494303,
+          "bm25_rank": 6,
+          "dense_score": 0.6839249134063721,
+          "dense_rank": 6,
+          "chunk_id": "f34d726fd600b797c2a6c85fcbe988112a92bbc6d4d521b8150e7adbc91f027d",
+          "paragraph_id": "",
+          "section_id": "1503.00841::section::full_text::0",
+          "figure_table_id": ""
+        }
+      ],
+      "answer": "Robustness of a model refers to its ability to perform well under various conditions, including different types of data, environments, and scenarios.",
+      "citations": [
+        {
+          "label": "E1",
+          "document_id": "903b5169742f42c84c2703efbfad625d25b49581c2e4bf8e3dfdcd0440a3772b",
+          "source_type": "chunk",
+          "source_id": "0d9d32a2d3d6cb184c8fbe30c204e29d70e947ea6a349a5105711c3c42b634bd",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Abstract"
+        },
+        {
+          "label": "E2",
+          "document_id": "09be3e5fca61d918096cc98147510fd80bf8791ed3a0a419a38f83627e4c1030",
+          "source_type": "chunk",
+          "source_id": "1d7ccf360c46cdd6e64ea8d6a5feb9cf7c604ef5d314368aadadeeb4eba3533a",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Related Work"
+        }
+      ],
+      "critic_verdict": {
+        "verdict": "accept",
+        "supported": true,
+        "missing_citations": [],
+        "unsupported_claims": [],
+        "revision_instruction": "",
+        "deterministic_failures": [],
+        "critic_mode": "llm",
+        "llm_critic_valid": true,
+        "critic_schema_error": null,
+        "fallback_used": false
+      },
+      "final_status": "accepted",
+      "retry_count": 0,
+      "agent_traces": [
+        {
+          "agent_name": "query_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "02428a8fec9788f6dc3a86b5d5f3aa679935678d",
+            "paper_id": "1503.00841",
+            "split": "validation"
+          },
+          "output_count": 1,
+          "decisions": [
+            "style=free-form",
+            "rewritten=False"
+          ],
+          "elapsed_ms": 0.035,
+          "error": null
+        },
+        {
+          "agent_name": "retrieval_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "02428a8fec9788f6dc3a86b5d5f3aa679935678d",
+            "paper_id": "1503.00841",
+            "split": "validation"
+          },
+          "output_count": 38,
+          "decisions": [
+            "scope=paper+split",
+            "canonical_deduplication=true",
+            "candidate_depth=50"
+          ],
+          "elapsed_ms": 896.497,
+          "error": null
+        },
+        {
+          "agent_name": "evidence_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "02428a8fec9788f6dc3a86b5d5f3aa679935678d",
+            "paper_id": "1503.00841",
+            "split": "validation"
+          },
+          "output_count": 5,
+          "decisions": [
+            "configuration=70/25/5",
+            "max_sources=5",
+            "citation_labels=stable"
+          ],
+          "elapsed_ms": 418.983,
+          "error": null
+        },
+        {
+          "agent_name": "answer_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "02428a8fec9788f6dc3a86b5d5f3aa679935678d",
+            "paper_id": "1503.00841",
+            "split": "validation"
+          },
+          "output_count": 1,
+          "decisions": [
+            "llm_called=true",
+            "validated_citations=2"
+          ],
+          "elapsed_ms": 17553.867,
+          "error": null
+        },
+        {
+          "agent_name": "critic_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "02428a8fec9788f6dc3a86b5d5f3aa679935678d",
+            "paper_id": "1503.00841",
+            "split": "validation"
+          },
+          "output_count": 1,
+          "decisions": [
+            "verdict=accept",
+            "critic_mode=llm",
+            "fallback_used=False",
+            "llm_called=True"
+          ],
+          "elapsed_ms": 1111.229,
+          "error": null
+        }
+      ],
+      "model_name": "Qwen/Qwen2.5-1.5B-Instruct",
+      "generation_configuration": {
+        "do_sample": false,
+        "max_new_tokens": 256,
+        "batch_size": 1
+      },
+      "runtime": 19.986548,
+      "attempt_history": [
+        {
+          "attempt_number": 1,
+          "answer": "Robustness of a model refers to its ability to perform well under various conditions, including different types of data, environments, and scenarios.",
+          "validated_citations": [
+            "E1",
+            "E2"
+          ],
+          "critic_verdict": "accept",
+          "revision_instruction": "",
+          "deterministic_checks_passed": true,
+          "deterministic_failures": [],
+          "critic_mode": "llm",
+          "llm_critic_valid": true,
+          "critic_schema_error": null,
+          "fallback_used": false
+        }
+      ]
+    },
+    {
+      "question_id": "50be4a737dc0951b35d139f51075011095d77f2a",
+      "question": "What background knowledge do they leverage?",
+      "paper_id": "1503.00841",
+      "split": "validation",
+      "query_plan": {
+        "question_id": "50be4a737dc0951b35d139f51075011095d77f2a",
+        "paper_id": "1503.00841",
+        "split": "validation",
+        "original_question": "What background knowledge do they leverage?",
+        "normalized_question": "What background knowledge do they leverage?",
+        "retrieval_query": "What background knowledge do they leverage?",
+        "question_style": "extractive",
+        "rewritten": false
+      },
+      "selected_evidence": [
+        {
+          "citation_label": "E1",
+          "document_id": "e18d9049c891e05ddd35044793a70762c6732281ebf8990fd6d1f407a14cdec2",
+          "source_type": "chunk",
+          "source_id": "63afe5c35f2a56d41d3d64c86e619b24aee8745487b6a272de71df29c543528b",
+          "paper_id": "1503.00841",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Introduction",
+          "evidence_text": "we posses a wealth of prior knowledge about many natural language processing tasks. for example, in text categorization, we know that words such as nba, player, and basketball are strong indicators of the sports category bibref0, and words like terrible, boring, and messing indicate a negative polarity while words like perfect, exciting, and moving suggest a positive polarity in sentiment classification. a key problem arisen here, is how to leverage such knowledge to guide the learning process, an interesting problem for both nlp and machine learning communities. previous studies addressing the problem fall into several lines. first, to leverage prior knowledge to label data bibref1, bibref2. second, to encode prior knowledge with a prior on parameters, which can be commonly seen in many bayesian approaches bibref3, bibref4. third, to formalise prior knowledge with additional variables and dependencies bibref5. last, to use prior knowledge to control the distributions over latent output variables bibref6, bibref7, bibref8, which makes the output variables easily interpretable. however, a crucial problem, which has rarely been addressed, is the bias in the prior knowledge that we supply to the learning model. would the model be robust or sensitive to the prior knowledge? or, which kind of knowledge is appropriate for the task? let ' s see an example : we may be a baseball fan but unfamiliar with hockey so that we can provide a few number of feature words of baseball, but much less of hockey for a baseball - hockey classification task. such prior knowledge may mislead the model with heavy bias to baseball. if the model cannot handle this situation appropriately, the performance may be undesirable.",
+          "final_rank": 1,
+          "final_evidence_score": 1.0,
+          "cross_encoder_score": -1.5777415037155151,
+          "normalized_cross_encoder_score": 1.0,
+          "normalized_hybrid_score": 1.0,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 1,
+          "hybrid_score": 0.03252247488101534,
+          "bm25_score": 3.281926341789142,
+          "bm25_rank": 2,
+          "dense_score": 0.6564906239509583,
+          "dense_rank": 1,
+          "chunk_id": "63afe5c35f2a56d41d3d64c86e619b24aee8745487b6a272de71df29c543528b",
+          "paragraph_id": "",
+          "section_id": "1503.00841::section::full_text::0",
+          "figure_table_id": ""
+        },
+        {
+          "citation_label": "E2",
+          "document_id": "04746fa3e68f0e915ea222aa483db7a17ce4c9bc194317e5766fa889a2dfd4a3",
+          "source_type": "chunk",
+          "source_id": "ea05a9ea25c9b8a965378b4d2b65b3074f9c281edbbecdd69eae7bd5e7dd02ca",
+          "paper_id": "1503.00841",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Conclusion and Discussions",
+          "evidence_text": "this paper investigates into the problem of how to leverage prior knowledge robustly in learning models. we propose three regularization terms on top of generalized expectation criteria. as demonstrated by the experimental results, the performance can be considerably improved when taking into account these factors. comparative results show that our proposed methods is more effective and works more robustly against baselines. to the best of our knowledge, this is the first work to address the robustness problem of leveraging knowledge, and may inspire other research. we then present more detailed discussions about the three regularization methods. incorporating neutral features is the simplest way of regularization, which doesn ' t require any modification of ge - fl but just finding out some common features. but as figure 1 ( a ) shows, only using neutral features are not strong enough to handle extremely unbalanced labeled features. the maximum entropy regularization term shows the strong ability of controlling unbalance. this method doesn ' t need any extra knowledge, and is thus suitable when we know nothing about the corpus. but this method assumes that the categories are uniformly distributed, which may not be the case in practice, and it will have a degraded performance if the assumption is violated ( see figure 1 ( b ), figure 2 ( b ), figure 3 ( a ) ). the kl divergence performs much better on unbalanced corpora than other methods. the reason is that kl divergence utilizes the reference class distribution and doesn ' t make any assumptions. the fact suggests that additional knowledge does benefit the model.",
+          "final_rank": 2,
+          "final_evidence_score": 0.850308659431083,
+          "cross_encoder_score": -3.3281216621398926,
+          "normalized_cross_encoder_score": 0.8169783160747096,
+          "normalized_hybrid_score": 0.9136953527151451,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 3,
+          "hybrid_score": 0.0315136476426799,
+          "bm25_score": 2.2504155834710127,
+          "bm25_rank": 5,
+          "dense_score": 0.6216187477111816,
+          "dense_rank": 2,
+          "chunk_id": "ea05a9ea25c9b8a965378b4d2b65b3074f9c281edbbecdd69eae7bd5e7dd02ca",
+          "paragraph_id": "",
+          "section_id": "1503.00841::section::full_text::13",
+          "figure_table_id": ""
+        },
+        {
+          "citation_label": "E3",
+          "document_id": "e6f06f0ecca79ace911fb497a034c78f525d767390846086a8c01e55ddf455bd",
+          "source_type": "chunk",
+          "source_id": "ca621c8f1b1c7b43661aa81fa7883bb3e2e03d5b831e9771244fc5622a1bcdc3",
+          "paper_id": "1503.00841",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Method",
+          "evidence_text": "we address the robustness problem on top of ge - fl bibref0, a ge method which leverages labeled features as prior knowledge. a labeled feature is a strong indicator of a specific class and is manually provided to the classifier. for example, words like amazing, exciting can be labeled features for class positive in sentiment classification.",
+          "final_rank": 3,
+          "final_evidence_score": 0.8235896161183227,
+          "cross_encoder_score": -2.6682941913604736,
+          "normalized_cross_encoder_score": 0.8859706056759128,
+          "normalized_hybrid_score": 0.613640768580735,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 10,
+          "hybrid_score": 0.028006267136701922,
+          "bm25_score": 0.5242773029302876,
+          "bm25_rank": 9,
+          "dense_score": 0.5702930688858032,
+          "dense_rank": 14,
+          "chunk_id": "ca621c8f1b1c7b43661aa81fa7883bb3e2e03d5b831e9771244fc5622a1bcdc3",
+          "paragraph_id": "1503.00841::section::full_text::1::paragraph::0",
+          "section_id": "1503.00841::section::full_text::1",
+          "figure_table_id": ""
+        },
+        {
+          "citation_label": "E4",
+          "document_id": "6915214f503f8f585be5de196cabc912eb362cad9064b6254e9baef58f04fecf",
+          "source_type": "chunk",
+          "source_id": "d16456bbfad721bf0e4f24ba7ec4d0d6a9fed1edf291bab6c566fc4c4764da59",
+          "paper_id": "1503.00841",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Related Work",
+          "evidence_text": "there have been much work that incorporate prior knowledge into learning, and two related lines are surveyed here. one is to use prior knowledge to label unlabeled instances and then apply a standard learning algorithm. the other is to constrain the model directly with prior knowledge. liu et al. text manually labeled features which are highly predictive to unsupervised clustering assignments and use them to label unlabeled data. chang et al. guiding proposed constraint driven learning. they first used constraints and the learned model to annotate unlabeled instances, and then updated the model with the newly labeled data. daume daume2008cross proposed a self training method in which several models are trained on the same dataset, and only unlabeled instances that satisfy the cross task knowledge constraints are used in the self training process. macallum et al. gec proposed generalized expectation ( ge ) criteria which formalised the knowledge as constraint terms about the expectation of the model into the objective function. graca et al. pr proposed posterior regularization ( pr ) framework which projects the model ' s posterior onto a set of distributions that satisfy the auxiliary constraints. druck et al. ge - fl explored constraints of labeled features in the framework of ge by forcing the model ' s predicted feature distribution to approach the reference distribution. andrzejewski et al. andrzejewski2011framework proposed a framework in which general domain knowledge can be easily incorporated into lda. altendorf et al. altendorf2012learning explored monotonicity constraints to improve the accuracy while learning from sparse data. chen et al. chen2013leveraging tried to learn comprehensible topic models by leveraging multi - domain knowledge.",
+          "final_rank": 4,
+          "final_evidence_score": 0.4392266160698194,
+          "cross_encoder_score": -8.663076400756836,
+          "normalized_cross_encoder_score": 0.2591495522901566,
+          "normalized_hybrid_score": 0.8312877178668391,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 6,
+          "hybrid_score": 0.03055037313432836,
+          "bm25_score": 2.066675951106654,
+          "bm25_rank": 7,
+          "dense_score": 0.6052193641662598,
+          "dense_rank": 4,
+          "chunk_id": "d16456bbfad721bf0e4f24ba7ec4d0d6a9fed1edf291bab6c566fc4c4764da59",
+          "paragraph_id": "",
+          "section_id": "1503.00841::section::full_text::12",
+          "figure_table_id": ""
+        },
+        {
+          "citation_label": "E5",
+          "document_id": "09be3e5fca61d918096cc98147510fd80bf8791ed3a0a419a38f83627e4c1030",
+          "source_type": "chunk",
+          "source_id": "1d7ccf360c46cdd6e64ea8d6a5feb9cf7c604ef5d314368aadadeeb4eba3533a",
+          "paper_id": "1503.00841",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Related Work",
+          "evidence_text": "mann and mccallum simple, generalized incorporated not only labeled features but also other knowledge like class distribution into the objective function of ge - fl. but they discussed only from the semi - supervised perspective and did not investigate into the robustness problem, unlike what we addressed in this paper. there are also some active learning methods trying to use prior knowledge. raghavan et al. feedback proposed to use feedback on instances and features interlacedly, and demonstrated that feedback on features boosts the model much. druck et al. active proposed an active learning method which solicits labels on features rather than on instances and then used ge - fl to train the model.",
+          "final_rank": 5,
+          "final_evidence_score": 0.4051107112197773,
+          "cross_encoder_score": -9.487923622131348,
+          "normalized_cross_encoder_score": 0.1729026151831041,
+          "normalized_hybrid_score": 0.9363155223664179,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 2,
+          "hybrid_score": 0.03177805800756621,
+          "bm25_score": 5.914244351065475,
+          "bm25_rank": 1,
+          "dense_score": 0.6039239764213562,
+          "dense_rank": 5,
+          "chunk_id": "1d7ccf360c46cdd6e64ea8d6a5feb9cf7c604ef5d314368aadadeeb4eba3533a",
+          "paragraph_id": "",
+          "section_id": "1503.00841::section::full_text::12",
+          "figure_table_id": ""
+        }
+      ],
+      "answer": "The background knowledge leveraged includes prior knowledge about word associations and their roles in different categories, as well as techniques for incorporating this knowledge into learning models.",
+      "citations": [
+        {
+          "label": "E1",
+          "document_id": "e18d9049c891e05ddd35044793a70762c6732281ebf8990fd6d1f407a14cdec2",
+          "source_type": "chunk",
+          "source_id": "63afe5c35f2a56d41d3d64c86e619b24aee8745487b6a272de71df29c543528b",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Introduction"
+        },
+        {
+          "label": "E2",
+          "document_id": "04746fa3e68f0e915ea222aa483db7a17ce4c9bc194317e5766fa889a2dfd4a3",
+          "source_type": "chunk",
+          "source_id": "ea05a9ea25c9b8a965378b4d2b65b3074f9c281edbbecdd69eae7bd5e7dd02ca",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Conclusion and Discussions"
+        },
+        {
+          "label": "E3",
+          "document_id": "e6f06f0ecca79ace911fb497a034c78f525d767390846086a8c01e55ddf455bd",
+          "source_type": "chunk",
+          "source_id": "ca621c8f1b1c7b43661aa81fa7883bb3e2e03d5b831e9771244fc5622a1bcdc3",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Method"
+        },
+        {
+          "label": "E4",
+          "document_id": "6915214f503f8f585be5de196cabc912eb362cad9064b6254e9baef58f04fecf",
+          "source_type": "chunk",
+          "source_id": "d16456bbfad721bf0e4f24ba7ec4d0d6a9fed1edf291bab6c566fc4c4764da59",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Related Work"
+        },
+        {
+          "label": "E5",
+          "document_id": "09be3e5fca61d918096cc98147510fd80bf8791ed3a0a419a38f83627e4c1030",
+          "source_type": "chunk",
+          "source_id": "1d7ccf360c46cdd6e64ea8d6a5feb9cf7c604ef5d314368aadadeeb4eba3533a",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Related Work"
+        }
+      ],
+      "critic_verdict": {
+        "verdict": "accept",
+        "supported": true,
+        "missing_citations": [],
+        "unsupported_claims": [],
+        "revision_instruction": "",
+        "deterministic_failures": [],
+        "critic_mode": "llm",
+        "llm_critic_valid": true,
+        "critic_schema_error": null,
+        "fallback_used": false
+      },
+      "final_status": "accepted",
+      "retry_count": 0,
+      "agent_traces": [
+        {
+          "agent_name": "query_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "50be4a737dc0951b35d139f51075011095d77f2a",
+            "paper_id": "1503.00841",
+            "split": "validation"
+          },
+          "output_count": 1,
+          "decisions": [
+            "style=extractive",
+            "rewritten=False"
+          ],
+          "elapsed_ms": 0.158,
+          "error": null
+        },
+        {
+          "agent_name": "retrieval_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "50be4a737dc0951b35d139f51075011095d77f2a",
+            "paper_id": "1503.00841",
+            "split": "validation"
+          },
+          "output_count": 38,
+          "decisions": [
+            "scope=paper+split",
+            "canonical_deduplication=true",
+            "candidate_depth=50"
+          ],
+          "elapsed_ms": 933.513,
+          "error": null
+        },
+        {
+          "agent_name": "evidence_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "50be4a737dc0951b35d139f51075011095d77f2a",
+            "paper_id": "1503.00841",
+            "split": "validation"
+          },
+          "output_count": 5,
+          "decisions": [
+            "configuration=70/25/5",
+            "max_sources=5",
+            "citation_labels=stable"
+          ],
+          "elapsed_ms": 191.669,
+          "error": null
+        },
+        {
+          "agent_name": "answer_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "50be4a737dc0951b35d139f51075011095d77f2a",
+            "paper_id": "1503.00841",
+            "split": "validation"
+          },
+          "output_count": 1,
+          "decisions": [
+            "llm_called=true",
+            "validated_citations=5"
+          ],
+          "elapsed_ms": 2314.33,
+          "error": null
+        },
+        {
+          "agent_name": "critic_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "50be4a737dc0951b35d139f51075011095d77f2a",
+            "paper_id": "1503.00841",
+            "split": "validation"
+          },
+          "output_count": 1,
+          "decisions": [
+            "verdict=accept",
+            "critic_mode=llm",
+            "fallback_used=False",
+            "llm_called=True"
+          ],
+          "elapsed_ms": 1548.688,
+          "error": null
+        }
+      ],
+      "model_name": "Qwen/Qwen2.5-1.5B-Instruct",
+      "generation_configuration": {
+        "do_sample": false,
+        "max_new_tokens": 256,
+        "batch_size": 1
+      },
+      "runtime": 4.992538,
+      "attempt_history": [
+        {
+          "attempt_number": 1,
+          "answer": "The background knowledge leveraged includes prior knowledge about word associations and their roles in different categories, as well as techniques for incorporating this knowledge into learning models.",
+          "validated_citations": [
+            "E1",
+            "E2",
+            "E3",
+            "E4",
+            "E5"
+          ],
+          "critic_verdict": "accept",
+          "revision_instruction": "",
+          "deterministic_checks_passed": true,
+          "deterministic_failures": [],
+          "critic_mode": "llm",
+          "llm_critic_valid": true,
+          "critic_schema_error": null,
+          "fallback_used": false
+        }
+      ]
+    },
+    {
+      "question_id": "6becff2967fe7c5256fe0b00231765be5b9db9f1",
+      "question": "What are the three regularization terms?",
+      "paper_id": "1503.00841",
+      "split": "validation",
+      "query_plan": {
+        "question_id": "6becff2967fe7c5256fe0b00231765be5b9db9f1",
+        "paper_id": "1503.00841",
+        "split": "validation",
+        "original_question": "What are the three regularization terms?",
+        "normalized_question": "What are the three regularization terms?",
+        "retrieval_query": "What are the three regularization terms?",
+        "question_style": "extractive",
+        "rewritten": false
+      },
+      "selected_evidence": [
+        {
+          "citation_label": "E1",
+          "document_id": "04746fa3e68f0e915ea222aa483db7a17ce4c9bc194317e5766fa889a2dfd4a3",
+          "source_type": "chunk",
+          "source_id": "ea05a9ea25c9b8a965378b4d2b65b3074f9c281edbbecdd69eae7bd5e7dd02ca",
+          "paper_id": "1503.00841",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Conclusion and Discussions",
+          "evidence_text": "this paper investigates into the problem of how to leverage prior knowledge robustly in learning models. we propose three regularization terms on top of generalized expectation criteria. as demonstrated by the experimental results, the performance can be considerably improved when taking into account these factors. comparative results show that our proposed methods is more effective and works more robustly against baselines. to the best of our knowledge, this is the first work to address the robustness problem of leveraging knowledge, and may inspire other research. we then present more detailed discussions about the three regularization methods. incorporating neutral features is the simplest way of regularization, which doesn ' t require any modification of ge - fl but just finding out some common features. but as figure 1 ( a ) shows, only using neutral features are not strong enough to handle extremely unbalanced labeled features. the maximum entropy regularization term shows the strong ability of controlling unbalance. this method doesn ' t need any extra knowledge, and is thus suitable when we know nothing about the corpus. but this method assumes that the categories are uniformly distributed, which may not be the case in practice, and it will have a degraded performance if the assumption is violated ( see figure 1 ( b ), figure 2 ( b ), figure 3 ( a ) ). the kl divergence performs much better on unbalanced corpora than other methods. the reason is that kl divergence utilizes the reference class distribution and doesn ' t make any assumptions. the fact suggests that additional knowledge does benefit the model.",
+          "final_rank": 1,
+          "final_evidence_score": 0.988795518207283,
+          "cross_encoder_score": 5.413338661193848,
+          "normalized_cross_encoder_score": 1.0,
+          "normalized_hybrid_score": 0.9551820728291316,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 3,
+          "hybrid_score": 0.031746031746031744,
+          "bm25_score": 5.8174538402202085,
+          "bm25_rank": 3,
+          "dense_score": 0.7039984464645386,
+          "dense_rank": 3,
+          "chunk_id": "ea05a9ea25c9b8a965378b4d2b65b3074f9c281edbbecdd69eae7bd5e7dd02ca",
+          "paragraph_id": "",
+          "section_id": "1503.00841::section::full_text::13",
+          "figure_table_id": ""
+        },
+        {
+          "citation_label": "E2",
+          "document_id": "903b5169742f42c84c2703efbfad625d25b49581c2e4bf8e3dfdcd0440a3772b",
+          "source_type": "chunk",
+          "source_id": "0d9d32a2d3d6cb184c8fbe30c204e29d70e947ea6a349a5105711c3c42b634bd",
+          "paper_id": "1503.00841",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Abstract",
+          "evidence_text": "prior knowledge has been shown very useful to address many natural language processing tasks. many approaches have been proposed to formalise a variety of knowledge, however, whether the proposed approach is robust or sensitive to the knowledge supplied to the model has rarely been discussed. in this paper, we propose three regularization terms on top of generalized expectation criteria, and conduct extensive experiments to justify the robustness of the proposed methods. experimental results demonstrate that our proposed methods obtain remarkable improvements and are much more robust than baselines.",
+          "final_rank": 2,
+          "final_evidence_score": 0.9547691658289144,
+          "cross_encoder_score": 4.450977325439453,
+          "normalized_cross_encoder_score": 0.9428752238112467,
+          "normalized_hybrid_score": 0.9790260366441663,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 2,
+          "hybrid_score": 0.032018442622950824,
+          "bm25_score": 6.116645591109007,
+          "bm25_rank": 1,
+          "dense_score": 0.7019357681274414,
+          "dense_rank": 4,
+          "chunk_id": "0d9d32a2d3d6cb184c8fbe30c204e29d70e947ea6a349a5105711c3c42b634bd",
+          "paragraph_id": "1503.00841::section::abstract::0::paragraph::0",
+          "section_id": "1503.00841::section::abstract::0",
+          "figure_table_id": ""
+        },
+        {
+          "citation_label": "E3",
+          "document_id": "89c2b825fc6c5bf7bce0f7bdd33d2ae15a1cf3d93a8614e1fcabbed1050c1f38",
+          "source_type": "chunk",
+          "source_id": "f34d726fd600b797c2a6c85fcbe988112a92bbc6d4d521b8150e7adbc91f027d",
+          "paper_id": "1503.00841",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Introduction",
+          "evidence_text": "in this paper, we investigate into the problem in the framework of generalized expectation criteria bibref7. the study aims to reveal the factors of reducing the sensibility of the prior knowledge and therefore to make the model more robust and practical. to this end, we introduce auxiliary regularization terms in which our prior knowledge is formalized as distribution over output variables. recall the example just mentioned, though we do not have enough knowledge to provide features for class hockey, it is easy for us to provide some neutral words, namely words that are not strong indicators of any class, like player here. as one of the factors revealed in this paper, supplying neutral feature words can boost the performance remarkably, making the model more robust. more attractively, we do not need manual annotation to label these neutral feature words in our proposed approach. more specifically, we explore three regularization terms to address the problem : ( 1 ) a regularization term associated with neutral features ; ( 2 ) the maximum entropy of class distribution regularization term ; and ( 3 ) the kl divergence between reference and predicted class distribution. for the first manner, we simply use the most common features as neutral features and assume the neutral features are distributed uniformly over class labels. for the second and third one, we assume we have some knowledge about the class distribution which will be detailed soon later. to summarize, the main contributions of this work are as follows : the rest of the paper is structured as follows : in section 2, we briefly describe the generalized expectation criteria and present the proposed regularization terms. in section 3, we conduct extensive experiments to justify the proposed methods. we survey related work in section 4, and summarize our work in section 5.",
+          "final_rank": 3,
+          "final_evidence_score": 0.9093651317914179,
+          "cross_encoder_score": 3.2320611476898193,
+          "normalized_cross_encoder_score": 0.8705216168448826,
+          "normalized_hybrid_score": 1.0,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 1,
+          "hybrid_score": 0.03225806451612903,
+          "bm25_score": 5.993232887307815,
+          "bm25_rank": 2,
+          "dense_score": 0.7069017887115479,
+          "dense_rank": 2,
+          "chunk_id": "f34d726fd600b797c2a6c85fcbe988112a92bbc6d4d521b8150e7adbc91f027d",
+          "paragraph_id": "",
+          "section_id": "1503.00841::section::full_text::0",
+          "figure_table_id": ""
+        },
+        {
+          "citation_label": "E4",
+          "document_id": "d0a34aa0a38b4dea925faf9959170df90fc07e0574664b55c7f4d3720af9831a",
+          "source_type": "chunk",
+          "source_id": "1f658d5c61608cbb8375aeb912b511e0575b3f5a2fdc49c55514f87ad9132cc1",
+          "paper_id": "1503.00841",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Regularization Terms",
+          "evidence_text": "ge - fl reduces the heavy load of instance annotation and performs well when we provide prior knowledge with no bias. in our experiments, we observe that comparable numbers of labeled features for each class have to be supplied. but as mentioned before, it is often the case that we are not able to provide enough knowledge for some of the classes. for the baseball - hockey classification task, as shown before, ge - fl will predict most of the instances as baseball. in this section, we will show three terms to make the model more robust. neutral features are features that are not informative indicator of any classes, for instance, word player to the baseball - hockey classification task. such features are usually frequent words across all categories. when we set the preference distribution of the neutral features to be uniform distributed, these neutral features will prevent the model from biasing to the class that has a dominate number of labeled features. formally, given a set of neutral features $ k ^ { ^ { \\ prime } } $, the uniform distribution is $ \\ hat { p } _ u ( y | x _ k ) = \\ frac { 1 } { | c | }, k \\ in k ^ { ^ { \\ prime } } $, where $ | c | $ is the number of classes. the objective function with the new term becomes $ $ \\ mathcal { o } _ { ne } = \\ mathcal { o } + \\ sum _ { k \\ in k ^ { ^ { \\ prime } } } kl ( \\ hat { p } _ u ( y | x _ k ) | | p _ \\ theta ( y | x _ k ) ). $ $ ( eq. 9 )",
+          "final_rank": 4,
+          "final_evidence_score": 0.8075717772450423,
+          "cross_encoder_score": 2.2811970710754395,
+          "normalized_cross_encoder_score": 0.8140793060989481,
+          "normalized_hybrid_score": 0.7508650519031143,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 8,
+          "hybrid_score": 0.029411764705882353,
+          "bm25_score": 3.945401242091238,
+          "bm25_rank": 8,
+          "dense_score": 0.6655722856521606,
+          "dense_rank": 8,
+          "chunk_id": "1f658d5c61608cbb8375aeb912b511e0575b3f5a2fdc49c55514f87ad9132cc1",
+          "paragraph_id": "",
+          "section_id": "1503.00841::section::full_text::4",
+          "figure_table_id": ""
+        },
+        {
+          "citation_label": "E5",
+          "document_id": "a76e2da804edfa734a9aef2bb495138472f347c4af1275873401e3dc06c68131",
+          "source_type": "section",
+          "source_id": "1503.00841::section::full_text::4",
+          "paper_id": "1503.00841",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Regularization Terms",
+          "evidence_text": "Regularization Terms",
+          "final_rank": 5,
+          "final_evidence_score": 0.7815409355498029,
+          "cross_encoder_score": 1.0625916719436646,
+          "normalized_cross_encoder_score": 0.7417441466307636,
+          "normalized_hybrid_score": 0.849280131633073,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 4,
+          "hybrid_score": 0.030536130536130537,
+          "bm25_score": 4.3136719834775255,
+          "bm25_rank": 6,
+          "dense_score": 0.6896538138389587,
+          "dense_rank": 5,
+          "chunk_id": "",
+          "paragraph_id": "",
+          "section_id": "1503.00841::section::full_text::4",
+          "figure_table_id": ""
+        }
+      ],
+      "answer": "neutral features, maximum entropy regularization term, KL divergence",
+      "citations": [
+        {
+          "label": "E1",
+          "document_id": "04746fa3e68f0e915ea222aa483db7a17ce4c9bc194317e5766fa889a2dfd4a3",
+          "source_type": "chunk",
+          "source_id": "ea05a9ea25c9b8a965378b4d2b65b3074f9c281edbbecdd69eae7bd5e7dd02ca",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Conclusion and Discussions"
+        },
+        {
+          "label": "E2",
+          "document_id": "903b5169742f42c84c2703efbfad625d25b49581c2e4bf8e3dfdcd0440a3772b",
+          "source_type": "chunk",
+          "source_id": "0d9d32a2d3d6cb184c8fbe30c204e29d70e947ea6a349a5105711c3c42b634bd",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Abstract"
+        }
+      ],
+      "critic_verdict": {
+        "verdict": "accept",
+        "supported": true,
+        "missing_citations": [],
+        "unsupported_claims": [
+          "maximum entropy regularization term"
+        ],
+        "revision_instruction": "Please provide more details on the maximum entropy regularization term.",
+        "deterministic_failures": [],
+        "critic_mode": "llm",
+        "llm_critic_valid": true,
+        "critic_schema_error": null,
+        "fallback_used": false
+      },
+      "final_status": "accepted",
+      "retry_count": 0,
+      "agent_traces": [
+        {
+          "agent_name": "query_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "6becff2967fe7c5256fe0b00231765be5b9db9f1",
+            "paper_id": "1503.00841",
+            "split": "validation"
+          },
+          "output_count": 1,
+          "decisions": [
+            "style=extractive",
+            "rewritten=False"
+          ],
+          "elapsed_ms": 0.01,
+          "error": null
+        },
+        {
+          "agent_name": "retrieval_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "6becff2967fe7c5256fe0b00231765be5b9db9f1",
+            "paper_id": "1503.00841",
+            "split": "validation"
+          },
+          "output_count": 38,
+          "decisions": [
+            "scope=paper+split",
+            "canonical_deduplication=true",
+            "candidate_depth=50"
+          ],
+          "elapsed_ms": 27.53,
+          "error": null
+        },
+        {
+          "agent_name": "evidence_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "6becff2967fe7c5256fe0b00231765be5b9db9f1",
+            "paper_id": "1503.00841",
+            "split": "validation"
+          },
+          "output_count": 5,
+          "decisions": [
+            "configuration=70/25/5",
+            "max_sources=5",
+            "citation_labels=stable"
+          ],
+          "elapsed_ms": 140.867,
+          "error": null
+        },
+        {
+          "agent_name": "answer_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "6becff2967fe7c5256fe0b00231765be5b9db9f1",
+            "paper_id": "1503.00841",
+            "split": "validation"
+          },
+          "output_count": 1,
+          "decisions": [
+            "llm_called=true",
+            "validated_citations=2"
+          ],
+          "elapsed_ms": 1566.022,
+          "error": null
+        },
+        {
+          "agent_name": "critic_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "6becff2967fe7c5256fe0b00231765be5b9db9f1",
+            "paper_id": "1503.00841",
+            "split": "validation"
+          },
+          "output_count": 1,
+          "decisions": [
+            "verdict=accept",
+            "critic_mode=llm",
+            "fallback_used=False",
+            "llm_called=True"
+          ],
+          "elapsed_ms": 1518.258,
+          "error": null
+        }
+      ],
+      "model_name": "Qwen/Qwen2.5-1.5B-Instruct",
+      "generation_configuration": {
+        "do_sample": false,
+        "max_new_tokens": 256,
+        "batch_size": 1
+      },
+      "runtime": 3.25287,
+      "attempt_history": [
+        {
+          "attempt_number": 1,
+          "answer": "neutral features, maximum entropy regularization term, KL divergence",
+          "validated_citations": [
+            "E1",
+            "E2"
+          ],
+          "critic_verdict": "accept",
+          "revision_instruction": "Please provide more details on the maximum entropy regularization term.",
+          "deterministic_checks_passed": true,
+          "deterministic_failures": [],
+          "critic_mode": "llm",
+          "llm_critic_valid": true,
+          "critic_schema_error": null,
+          "fallback_used": false
+        }
+      ]
+    },
+    {
+      "question_id": "76121e359dfe3f16c2a352bd35f28005f2a40da3",
+      "question": "What NLP tasks do they consider?",
+      "paper_id": "1503.00841",
+      "split": "validation",
+      "query_plan": {
+        "question_id": "76121e359dfe3f16c2a352bd35f28005f2a40da3",
+        "paper_id": "1503.00841",
+        "split": "validation",
+        "original_question": "What NLP tasks do they consider?",
+        "normalized_question": "What NLP tasks do they consider?",
+        "retrieval_query": "What NLP tasks do they consider?",
+        "question_style": "extractive",
+        "rewritten": false
+      },
+      "selected_evidence": [
+        {
+          "citation_label": "E1",
+          "document_id": "e18d9049c891e05ddd35044793a70762c6732281ebf8990fd6d1f407a14cdec2",
+          "source_type": "chunk",
+          "source_id": "63afe5c35f2a56d41d3d64c86e619b24aee8745487b6a272de71df29c543528b",
+          "paper_id": "1503.00841",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Introduction",
+          "evidence_text": "we posses a wealth of prior knowledge about many natural language processing tasks. for example, in text categorization, we know that words such as nba, player, and basketball are strong indicators of the sports category bibref0, and words like terrible, boring, and messing indicate a negative polarity while words like perfect, exciting, and moving suggest a positive polarity in sentiment classification. a key problem arisen here, is how to leverage such knowledge to guide the learning process, an interesting problem for both nlp and machine learning communities. previous studies addressing the problem fall into several lines. first, to leverage prior knowledge to label data bibref1, bibref2. second, to encode prior knowledge with a prior on parameters, which can be commonly seen in many bayesian approaches bibref3, bibref4. third, to formalise prior knowledge with additional variables and dependencies bibref5. last, to use prior knowledge to control the distributions over latent output variables bibref6, bibref7, bibref8, which makes the output variables easily interpretable. however, a crucial problem, which has rarely been addressed, is the bias in the prior knowledge that we supply to the learning model. would the model be robust or sensitive to the prior knowledge? or, which kind of knowledge is appropriate for the task? let ' s see an example : we may be a baseball fan but unfamiliar with hockey so that we can provide a few number of feature words of baseball, but much less of hockey for a baseball - hockey classification task. such prior knowledge may mislead the model with heavy bias to baseball. if the model cannot handle this situation appropriately, the performance may be undesirable.",
+          "final_rank": 1,
+          "final_evidence_score": 1.0,
+          "cross_encoder_score": -1.7038826942443848,
+          "normalized_cross_encoder_score": 1.0,
+          "normalized_hybrid_score": 1.0,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 1,
+          "hybrid_score": 0.03252247488101534,
+          "bm25_score": 3.386266177232476,
+          "bm25_rank": 2,
+          "dense_score": 0.6358283162117004,
+          "dense_rank": 1,
+          "chunk_id": "63afe5c35f2a56d41d3d64c86e619b24aee8745487b6a272de71df29c543528b",
+          "paragraph_id": "",
+          "section_id": "1503.00841::section::full_text::0",
+          "figure_table_id": ""
+        },
+        {
+          "citation_label": "E2",
+          "document_id": "7ccd44fd2a4734ea658e7289e86258d5d9f49d74c1b8ab730c03d04589bcaca9",
+          "source_type": "chunk",
+          "source_id": "af9b18f5e866a41cafe658d774e31aae8768f693dcbc91bc7f8f59ef164d8fef",
+          "paper_id": "1503.00841",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Data Preparation",
+          "evidence_text": "we evaluate our methods on several commonly used datasets whose themes range from sentiment, web - page, science to medical and healthcare. we use bag - of - words feature and remove stopwords in the preprocess stage. though we have labels of all documents, we do not use them during the learning process, instead, we use the label of features. the movie dataset, in which the task is to classify the movie reviews as positive or negtive, is used for testing the proposed approaches with unbalanced labeled features, unbalanced datasets or different $ \\ lambda $ parameters. all unbalanced datasets are constructed based on the movie dataset by randomly removing documents of the positive class. for each experiment, we conduct 10 - fold cross validation. as described in bibref0, there are two ways to obtain labeled features. the first way is to use information gain. we first calculate the mutual information of all features according to the labels of the documents and select the top 20 as labeled features for each class as a feature pool. note that using information gain requires the document label, but this is only to simulate how we human provide prior knowledge to the model. the second way is to use lda bibref9 to select features. we use the same selection process as bibref0, where they first train a lda on the dataset, and then select the most probable features of each topic ( sorted by $ p ( w _ i | t _ j ) $, the probability of word $ w _ i $ given topic $ t _ j $ ).",
+          "final_rank": 2,
+          "final_evidence_score": 0.43664806617447915,
+          "cross_encoder_score": -9.04477310180664,
+          "normalized_cross_encoder_score": 0.24342187030593007,
+          "normalized_hybrid_score": 0.8650110278413125,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 4,
+          "hybrid_score": 0.031009615384615385,
+          "bm25_score": 2.779648150571441,
+          "bm25_rank": 4,
+          "dense_score": 0.5864607095718384,
+          "dense_rank": 5,
+          "chunk_id": "af9b18f5e866a41cafe658d774e31aae8768f693dcbc91bc7f8f59ef164d8fef",
+          "paragraph_id": "",
+          "section_id": "1503.00841::section::full_text::6",
+          "figure_table_id": ""
+        },
+        {
+          "citation_label": "E3",
+          "document_id": "903b5169742f42c84c2703efbfad625d25b49581c2e4bf8e3dfdcd0440a3772b",
+          "source_type": "chunk",
+          "source_id": "0d9d32a2d3d6cb184c8fbe30c204e29d70e947ea6a349a5105711c3c42b634bd",
+          "paper_id": "1503.00841",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Abstract",
+          "evidence_text": "prior knowledge has been shown very useful to address many natural language processing tasks. many approaches have been proposed to formalise a variety of knowledge, however, whether the proposed approach is robust or sensitive to the knowledge supplied to the model has rarely been discussed. in this paper, we propose three regularization terms on top of generalized expectation criteria, and conduct extensive experiments to justify the robustness of the proposed methods. experimental results demonstrate that our proposed methods obtain remarkable improvements and are much more robust than baselines.",
+          "final_rank": 3,
+          "final_evidence_score": 0.42103999012446575,
+          "cross_encoder_score": -9.567975997924805,
+          "normalized_cross_encoder_score": 0.18949872929461342,
+          "normalized_hybrid_score": 0.9535635184729455,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 3,
+          "hybrid_score": 0.03200204813108039,
+          "bm25_score": 2.852009004819735,
+          "bm25_rank": 3,
+          "dense_score": 0.611527681350708,
+          "dense_rank": 2,
+          "chunk_id": "0d9d32a2d3d6cb184c8fbe30c204e29d70e947ea6a349a5105711c3c42b634bd",
+          "paragraph_id": "1503.00841::section::abstract::0::paragraph::0",
+          "section_id": "1503.00841::section::abstract::0",
+          "figure_table_id": ""
+        },
+        {
+          "citation_label": "E4",
+          "document_id": "d0a34aa0a38b4dea925faf9959170df90fc07e0574664b55c7f4d3720af9831a",
+          "source_type": "chunk",
+          "source_id": "1f658d5c61608cbb8375aeb912b511e0575b3f5a2fdc49c55514f87ad9132cc1",
+          "paper_id": "1503.00841",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Regularization Terms",
+          "evidence_text": "ge - fl reduces the heavy load of instance annotation and performs well when we provide prior knowledge with no bias. in our experiments, we observe that comparable numbers of labeled features for each class have to be supplied. but as mentioned before, it is often the case that we are not able to provide enough knowledge for some of the classes. for the baseball - hockey classification task, as shown before, ge - fl will predict most of the instances as baseball. in this section, we will show three terms to make the model more robust. neutral features are features that are not informative indicator of any classes, for instance, word player to the baseball - hockey classification task. such features are usually frequent words across all categories. when we set the preference distribution of the neutral features to be uniform distributed, these neutral features will prevent the model from biasing to the class that has a dominate number of labeled features. formally, given a set of neutral features $ k ^ { ^ { \\ prime } } $, the uniform distribution is $ \\ hat { p } _ u ( y | x _ k ) = \\ frac { 1 } { | c | }, k \\ in k ^ { ^ { \\ prime } } $, where $ | c | $ is the number of classes. the objective function with the new term becomes $ $ \\ mathcal { o } _ { ne } = \\ mathcal { o } + \\ sum _ { k \\ in k ^ { ^ { \\ prime } } } kl ( \\ hat { p } _ u ( y | x _ k ) | | p _ \\ theta ( y | x _ k ) ). $ $ ( eq. 9 )",
+          "final_rank": 4,
+          "final_evidence_score": 0.3850590642148027,
+          "cross_encoder_score": -8.01371955871582,
+          "normalized_cross_encoder_score": 0.3496858952316395,
+          "normalized_hybrid_score": 0.3611157502106203,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 16,
+          "hybrid_score": 0.025362318840579712,
+          "bm25_score": 0.0,
+          "bm25_rank": 32,
+          "dense_score": 0.5785138607025146,
+          "dense_rank": 9,
+          "chunk_id": "1f658d5c61608cbb8375aeb912b511e0575b3f5a2fdc49c55514f87ad9132cc1",
+          "paragraph_id": "",
+          "section_id": "1503.00841::section::full_text::4",
+          "figure_table_id": ""
+        },
+        {
+          "citation_label": "E5",
+          "document_id": "6915214f503f8f585be5de196cabc912eb362cad9064b6254e9baef58f04fecf",
+          "source_type": "chunk",
+          "source_id": "d16456bbfad721bf0e4f24ba7ec4d0d6a9fed1edf291bab6c566fc4c4764da59",
+          "paper_id": "1503.00841",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Related Work",
+          "evidence_text": "there have been much work that incorporate prior knowledge into learning, and two related lines are surveyed here. one is to use prior knowledge to label unlabeled instances and then apply a standard learning algorithm. the other is to constrain the model directly with prior knowledge. liu et al. text manually labeled features which are highly predictive to unsupervised clustering assignments and use them to label unlabeled data. chang et al. guiding proposed constraint driven learning. they first used constraints and the learned model to annotate unlabeled instances, and then updated the model with the newly labeled data. daume daume2008cross proposed a self training method in which several models are trained on the same dataset, and only unlabeled instances that satisfy the cross task knowledge constraints are used in the self training process. macallum et al. gec proposed generalized expectation ( ge ) criteria which formalised the knowledge as constraint terms about the expectation of the model into the objective function. graca et al. pr proposed posterior regularization ( pr ) framework which projects the model ' s posterior onto a set of distributions that satisfy the auxiliary constraints. druck et al. ge - fl explored constraints of labeled features in the framework of ge by forcing the model ' s predicted feature distribution to approach the reference distribution. andrzejewski et al. andrzejewski2011framework proposed a framework in which general domain knowledge can be easily incorporated into lda. altendorf et al. altendorf2012learning explored monotonicity constraints to improve the accuracy while learning from sparse data. chen et al. chen2013leveraging tried to learn comprehensible topic models by leveraging multi - domain knowledge.",
+          "final_rank": 5,
+          "final_evidence_score": 0.3346343436884129,
+          "cross_encoder_score": -10.393482208251953,
+          "normalized_cross_encoder_score": 0.10441913949216113,
+          "normalized_hybrid_score": 0.8461637841756005,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 5,
+          "hybrid_score": 0.030798389007344232,
+          "bm25_score": 1.3573420820911155,
+          "bm25_rank": 7,
+          "dense_score": 0.5996977090835571,
+          "dense_rank": 3,
+          "chunk_id": "d16456bbfad721bf0e4f24ba7ec4d0d6a9fed1edf291bab6c566fc4c4764da59",
+          "paragraph_id": "",
+          "section_id": "1503.00841::section::full_text::12",
+          "figure_table_id": ""
+        }
+      ],
+      "answer": "Text categorization and sentiment classification",
+      "citations": [
+        {
+          "label": "E1",
+          "document_id": "e18d9049c891e05ddd35044793a70762c6732281ebf8990fd6d1f407a14cdec2",
+          "source_type": "chunk",
+          "source_id": "63afe5c35f2a56d41d3d64c86e619b24aee8745487b6a272de71df29c543528b",
+          "title": "Robustly Leveraging Prior Knowledge in Text Classification",
+          "section_name": "Introduction"
+        }
+      ],
+      "critic_verdict": {
+        "verdict": "accept",
+        "supported": true,
+        "missing_citations": [],
+        "unsupported_claims": [],
+        "revision_instruction": "",
+        "deterministic_failures": [],
+        "critic_mode": "llm",
+        "llm_critic_valid": true,
+        "critic_schema_error": null,
+        "fallback_used": false
+      },
+      "final_status": "accepted",
+      "retry_count": 0,
+      "agent_traces": [
+        {
+          "agent_name": "query_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "76121e359dfe3f16c2a352bd35f28005f2a40da3",
+            "paper_id": "1503.00841",
+            "split": "validation"
+          },
+          "output_count": 1,
+          "decisions": [
+            "style=extractive",
+            "rewritten=False"
+          ],
+          "elapsed_ms": 0.013,
+          "error": null
+        },
+        {
+          "agent_name": "retrieval_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "76121e359dfe3f16c2a352bd35f28005f2a40da3",
+            "paper_id": "1503.00841",
+            "split": "validation"
+          },
+          "output_count": 38,
+          "decisions": [
+            "scope=paper+split",
+            "canonical_deduplication=true",
+            "candidate_depth=50"
+          ],
+          "elapsed_ms": 37.569,
+          "error": null
+        },
+        {
+          "agent_name": "evidence_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "76121e359dfe3f16c2a352bd35f28005f2a40da3",
+            "paper_id": "1503.00841",
+            "split": "validation"
+          },
+          "output_count": 5,
+          "decisions": [
+            "configuration=70/25/5",
+            "max_sources=5",
+            "citation_labels=stable"
+          ],
+          "elapsed_ms": 124.93,
+          "error": null
+        },
+        {
+          "agent_name": "answer_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "76121e359dfe3f16c2a352bd35f28005f2a40da3",
+            "paper_id": "1503.00841",
+            "split": "validation"
+          },
+          "output_count": 1,
+          "decisions": [
+            "llm_called=true",
+            "validated_citations=1"
+          ],
+          "elapsed_ms": 1642.267,
+          "error": null
+        },
+        {
+          "agent_name": "critic_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "76121e359dfe3f16c2a352bd35f28005f2a40da3",
+            "paper_id": "1503.00841",
+            "split": "validation"
+          },
+          "output_count": 1,
+          "decisions": [
+            "verdict=accept",
+            "critic_mode=llm",
+            "fallback_used=False",
+            "llm_called=True"
+          ],
+          "elapsed_ms": 1118.003,
+          "error": null
+        }
+      ],
+      "model_name": "Qwen/Qwen2.5-1.5B-Instruct",
+      "generation_configuration": {
+        "do_sample": false,
+        "max_new_tokens": 256,
+        "batch_size": 1
+      },
+      "runtime": 2.922938,
+      "attempt_history": [
+        {
+          "attempt_number": 1,
+          "answer": "Text categorization and sentiment classification",
+          "validated_citations": [
+            "E1"
+          ],
+          "critic_verdict": "accept",
+          "revision_instruction": "",
+          "deterministic_checks_passed": true,
+          "deterministic_failures": [],
+          "critic_mode": "llm",
+          "llm_critic_valid": true,
+          "critic_schema_error": null,
+          "fallback_used": false
+        }
+      ]
+    },
+    {
+      "question_id": "1cb100182508cf55b3509283c0e2bbcd527d625e",
+      "question": "How is the data in the new corpus come sourced?",
+      "paper_id": "1601.02403",
+      "split": "validation",
+      "query_plan": {
+        "question_id": "1cb100182508cf55b3509283c0e2bbcd527d625e",
+        "paper_id": "1601.02403",
+        "split": "validation",
+        "original_question": "How is the data in the new corpus come sourced?",
+        "normalized_question": "How is the data in the new corpus come sourced?",
+        "retrieval_query": "How is the data in the new corpus come sourced?",
+        "question_style": "free-form",
+        "rewritten": false
+      },
+      "selected_evidence": [
+        {
+          "citation_label": "E1",
+          "document_id": "22cfbe7d1d6b88df2aebb4c479cbb2ed913f92be3b054c29adc42739a243b281",
+          "source_type": "chunk",
+          "source_id": "85f3b729f41e07d162058aa25023568830fb4e603ceedaf336d78d3f1ae88fd4",
+          "paper_id": "1601.02403",
+          "title": "Argumentation Mining in User-Generated Web Discourse",
+          "section_name": "Our contributions",
+          "evidence_text": "we create a new corpus which is, to the best of our knowledge, the largest corpus that has been annotated within the argumentation mining field to date. we choose several target domains from educational controversies, such as homeschooling, single - sex education, or mainstreaming. a novel aspect of the corpus is its coverage of different registers of user - generated web content, such as comments to articles, discussion forum posts, blog posts, as well as professional newswire articles. since the data come from a variety of sources and no assumptions about its actual content with respect to argumentation can be drawn, we conduct two extensive annotation studies. in the first study, we tackle the problem of relatively high \u201c noise \u201d in the retrieved data. in particular, not all of the documents are related to the given topics in a way that makes them candidates for further deep analysis of argumentation ( this study results into 990 annotated documents ). in the second study, we discuss the selection of an appropriate argumentation model based on evidence in argumentation research and propose a model that is suitable for analyzing micro - level argumention in user - generated web content. using this model, we annotate 340 documents ( approx. 90, 000 tokens ), reaching a substantial inter - annotator agreement. we provide a hand - analysis of all the phenomena typical to argumentation that are prevalent in our data. these findings may also serve as empirical evidence to issues that are on the spot of current argumentation research.",
+          "final_rank": 1,
+          "final_evidence_score": 1.0,
+          "cross_encoder_score": 2.385540246963501,
+          "normalized_cross_encoder_score": 1.0,
+          "normalized_hybrid_score": 1.0,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 1,
+          "hybrid_score": 0.03252247488101534,
+          "bm25_score": 14.713142885677241,
+          "bm25_rank": 1,
+          "dense_score": 0.7232543230056763,
+          "dense_rank": 2,
+          "chunk_id": "85f3b729f41e07d162058aa25023568830fb4e603ceedaf336d78d3f1ae88fd4",
+          "paragraph_id": "",
+          "section_id": "1601.02403::section::full_text::1",
+          "figure_table_id": ""
+        },
+        {
+          "citation_label": "E2",
+          "document_id": "949310bc811c7af869d0700e938d335e6041895133f67d99a84083d0005c6441",
+          "source_type": "chunk",
+          "source_id": "0a4a882c4ae31e15d01598a912ff37de1ba6e326e6ec4816ee01c5632e7c534b",
+          "paper_id": "1601.02403",
+          "title": "Argumentation Mining in User-Generated Web Discourse",
+          "section_name": "Annotation studies and corpus creation",
+          "evidence_text": "this section describes the process of data selection, annotation, curation, and evaluation with the goal of creating a new corpus suitable for argumentation mining research in the area of computational linguistics. as argumentation mining is an evolving discipline without established and widely - accepted annotation schemes, procedures, and evaluation, we want to keep this overview detailed to ensure full reproducibility of our approach. given the wide range of perspectives on argumentation itself bibref15, variety of argumentation models bibref27, and high costs of discourse or pragmatic annotations bibref48, creating a new, reliable corpus for argumentation mining represents a substantial effort. a motivation for creating a new corpus stems from the various use - cases discussed in the introduction, as well as some research gaps pointed in section secref1 and further discussed in the survey in section secref31 ( e. g., domain restrictions, missing connection to argumentation theories, non - reported reliability or detailed schemes ).",
+          "final_rank": 2,
+          "final_evidence_score": 0.7947175097398164,
+          "cross_encoder_score": -1.4664759635925293,
+          "normalized_cross_encoder_score": 0.7194842901828903,
+          "normalized_hybrid_score": 0.9643140264471729,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 2,
+          "hybrid_score": 0.031754032258064516,
+          "bm25_score": 12.918709717271131,
+          "bm25_rank": 2,
+          "dense_score": 0.7059476375579834,
+          "dense_rank": 4,
+          "chunk_id": "0a4a882c4ae31e15d01598a912ff37de1ba6e326e6ec4816ee01c5632e7c534b",
+          "paragraph_id": "",
+          "section_id": "1601.02403::section::full_text::10",
+          "figure_table_id": ""
+        },
+        {
+          "citation_label": "E3",
+          "document_id": "5a8ede9999e0980491915d69d398e9de481f0aac2e6cbe500b8e6efb4d99da89",
+          "source_type": "chunk",
+          "source_id": "ff3e9ac971d865a4cc830b6afd0681822b82df11614a0eb2dff7e004b618738b",
+          "paper_id": "1601.02403",
+          "title": "Argumentation Mining in User-Generated Web Discourse",
+          "section_name": "Raw corpus statistics",
+          "evidence_text": "given the six controversial topics and four different registers, we compiled a collection of plain - text documents, which we call the raw corpus. it contains 694, 110 tokens in 5, 444 documents. as a coarse - grained analysis of the data, we examined the lengths and the number of paragraphs ( see figure figref43 ). comments and forum posts follow a similar distribution, being shorter than 300 tokens on average. by contrast, articles and blogs are longer than 400 tokens and have 9. 2 paragraphs on average. the process of compiling the raw corpus and its further statistics are described in detail in appendix uid158.",
+          "final_rank": 3,
+          "final_evidence_score": 0.6218402874437069,
+          "cross_encoder_score": -4.2793073654174805,
+          "normalized_cross_encoder_score": 0.514645225612888,
+          "normalized_hybrid_score": 0.8463545180587414,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 4,
+          "hybrid_score": 0.02921395544346364,
+          "bm25_score": 8.277758964906939,
+          "bm25_rank": 18,
+          "dense_score": 0.7774772047996521,
+          "dense_rank": 1,
+          "chunk_id": "ff3e9ac971d865a4cc830b6afd0681822b82df11614a0eb2dff7e004b618738b",
+          "paragraph_id": "1601.02403::section::full_text::12::paragraph::0",
+          "section_id": "1601.02403::section::full_text::12",
+          "figure_table_id": ""
+        },
+        {
+          "citation_label": "E4",
+          "document_id": "fe9a9de28b53a2372d552153a0ae4fefce179999b8a1eac60470db6790231012",
+          "source_type": "chunk",
+          "source_id": "48a65b396f3426bcc97e33aac0b41b6dd0d797f6104660eddbcb9c4e91ef7942",
+          "paper_id": "1601.02403",
+          "title": "Argumentation Mining in User-Generated Web Discourse",
+          "section_name": "Abstract",
+          "evidence_text": "the goal of argumentation mining, an evolving research field in computational linguistics, is to design methods capable of analyzing people ' s argumentation. in this article, we go beyond the state of the art in several ways. ( i ) we deal with actual web data and take up the challenges given by the variety of registers, multiple domains, and unrestricted noisy user - generated web discourse. ( ii ) we bridge the gap between normative argumentation theories and argumentation phenomena encountered in actual data by adapting an argumentation model tested in an extensive annotation study. ( iii ) we create a new gold standard corpus ( 90k tokens in 340 documents ) and experiment with several machine learning methods to identify argument components. we offer the data, source codes, and annotation guidelines to the community under free licenses. our findings show that argumentation mining in user - generated web discourse is a feasible but challenging task.",
+          "final_rank": 4,
+          "final_evidence_score": 0.6018650586128055,
+          "cross_encoder_score": -4.840509414672852,
+          "normalized_cross_encoder_score": 0.47377676021903053,
+          "normalized_hybrid_score": 0.8808853058379361,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 3,
+          "hybrid_score": 0.029957522915269395,
+          "bm25_score": 11.50548206088555,
+          "bm25_rank": 3,
+          "dense_score": 0.6926796436309814,
+          "dense_rank": 11,
+          "chunk_id": "48a65b396f3426bcc97e33aac0b41b6dd0d797f6104660eddbcb9c4e91ef7942",
+          "paragraph_id": "1601.02403::section::abstract::0::paragraph::0",
+          "section_id": "1601.02403::section::abstract::0",
+          "figure_table_id": ""
+        },
+        {
+          "citation_label": "E5",
+          "document_id": "3f44c6396a9d9f17b968df8f40d38e7842bed0207ec8f697a3c9a992891aa27a",
+          "source_type": "chunk",
+          "source_id": "b92d6fe614687e10fee30047db60cc7f6c7a7060ee3c66058f6c04ce16dd0cf0",
+          "paper_id": "1601.02403",
+          "title": "Argumentation Mining in User-Generated Web Discourse",
+          "section_name": "Annotation study 2: Annotating micro-structure of arguments",
+          "evidence_text": "for each of the 340 documents, the gold standard annotations were obtained using the majority vote. if simple majority voting was not possible ( different boundaries of the argument component together with a different component label ), the gold standard was set after discussion among the annotators. we will refer to this corpus as the gold standard toulmin corpus. the distribution of topics and registers in this corpus in shown in table tabref71, and table tabref72 presents some lexical statistics. based on pre - studies, we set the minimal unit for annotation as token. the documents were pre - segmented using the stanford core nlp sentence splitter bibref69 embedded in the dkpro core framework bibref70. annotators were asked to stick to the sentence level by default and label entire pre - segmented sentences. they should switch to annotations on the token level only if ( a ) a particular sentence contained more than one argument component, or ( b ) if the automatic sentence segmentation was wrong. given the \u201c noise \u201d in user - generated web data ( wrong or missing punctuation, casing, etc. ), this was often the case. annotators were also asked to rephrase ( summarize ) each annotated argument component into a simple statement when applicable, as shown in figure figref66. this was used as a first sanity checking step, as each argument component is expected to be a coherent discourse unit. for example, if a particular occurrence of a premise cannot be summarized / rephrased into one statement, this may require further splitting into two or more premises.",
+          "final_rank": 5,
+          "final_evidence_score": 0.4894005178498882,
+          "cross_encoder_score": -6.805450439453125,
+          "normalized_cross_encoder_score": 0.33068368994468883,
+          "normalized_hybrid_score": 0.8316877395544241,
+          "agreement_score": 1.0,
+          "retrieved_by_both": true,
+          "hybrid_rank": 5,
+          "hybrid_score": 0.0288981288981289,
+          "bm25_score": 8.69471188100158,
+          "bm25_rank": 14,
+          "dense_score": 0.7007444500923157,
+          "dense_rank": 5,
+          "chunk_id": "b92d6fe614687e10fee30047db60cc7f6c7a7060ee3c66058f6c04ce16dd0cf0",
+          "paragraph_id": "",
+          "section_id": "1601.02403::section::full_text::14",
+          "figure_table_id": ""
+        }
+      ],
+      "answer": "The data in the new corpus comes from a variety of sources including comments to articles, discussion forum posts, blog posts, and professional newswire articles.",
+      "citations": [
+        {
+          "label": "E1",
+          "document_id": "22cfbe7d1d6b88df2aebb4c479cbb2ed913f92be3b054c29adc42739a243b281",
+          "source_type": "chunk",
+          "source_id": "85f3b729f41e07d162058aa25023568830fb4e603ceedaf336d78d3f1ae88fd4",
+          "title": "Argumentation Mining in User-Generated Web Discourse",
+          "section_name": "Our contributions"
+        }
+      ],
+      "critic_verdict": {
+        "verdict": "accept",
+        "supported": true,
+        "missing_citations": [],
+        "unsupported_claims": [],
+        "revision_instruction": "",
+        "deterministic_failures": [],
+        "critic_mode": "llm",
+        "llm_critic_valid": true,
+        "critic_schema_error": null,
+        "fallback_used": false
+      },
+      "final_status": "accepted",
+      "retry_count": 0,
+      "agent_traces": [
+        {
+          "agent_name": "query_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "1cb100182508cf55b3509283c0e2bbcd527d625e",
+            "paper_id": "1601.02403",
+            "split": "validation"
+          },
+          "output_count": 1,
+          "decisions": [
+            "style=free-form",
+            "rewritten=False"
+          ],
+          "elapsed_ms": 0.012,
+          "error": null
+        },
+        {
+          "agent_name": "retrieval_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "1cb100182508cf55b3509283c0e2bbcd527d625e",
+            "paper_id": "1601.02403",
+            "split": "validation"
+          },
+          "output_count": 50,
+          "decisions": [
+            "scope=paper+split",
+            "canonical_deduplication=true",
+            "candidate_depth=50"
+          ],
+          "elapsed_ms": 62.458,
+          "error": null
+        },
+        {
+          "agent_name": "evidence_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "1cb100182508cf55b3509283c0e2bbcd527d625e",
+            "paper_id": "1601.02403",
+            "split": "validation"
+          },
+          "output_count": 5,
+          "decisions": [
+            "configuration=70/25/5",
+            "max_sources=5",
+            "citation_labels=stable"
+          ],
+          "elapsed_ms": 175.319,
+          "error": null
+        },
+        {
+          "agent_name": "answer_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "1cb100182508cf55b3509283c0e2bbcd527d625e",
+            "paper_id": "1601.02403",
+            "split": "validation"
+          },
+          "output_count": 1,
+          "decisions": [
+            "llm_called=true",
+            "validated_citations=1"
+          ],
+          "elapsed_ms": 2129.219,
+          "error": null
+        },
+        {
+          "agent_name": "critic_agent",
+          "status": "ok",
+          "input_identifiers": {
+            "question_id": "1cb100182508cf55b3509283c0e2bbcd527d625e",
+            "paper_id": "1601.02403",
+            "split": "validation"
+          },
+          "output_count": 1,
+          "decisions": [
+            "verdict=accept",
+            "critic_mode=llm",
+            "fallback_used=False",
+            "llm_called=True"
+          ],
+          "elapsed_ms": 1075.645,
+          "error": null
+        }
+      ],
+      "model_name": "Qwen/Qwen2.5-1.5B-Instruct",
+      "generation_configuration": {
+        "do_sample": false,
+        "max_new_tokens": 256,
+        "batch_size": 1
+      },
+      "runtime": 3.442804,
+      "attempt_history": [
+        {
+          "attempt_number": 1,
+          "answer": "The data in the new corpus comes from a variety of sources including comments to articles, discussion forum posts, blog posts, and professional newswire articles.",
+          "validated_citations": [
+            "E1"
+          ],
+          "critic_verdict": "accept",
+          "revision_instruction": "",
+          "deterministic_checks_passed": true,
+          "deterministic_failures": [],
+          "critic_mode": "llm",
+          "llm_critic_valid": true,
+          "critic_schema_error": null,
+          "fallback_used": false
+        }
+      ]
+    }
+  ]
+}

@@ -115,3 +115,37 @@ class AnswerDraft(SerializableContract):
     unanswerable: bool
     status: str
     error: Optional[str] = None
+
+
+@dataclass(frozen=True)
+class CriticVerdict(SerializableContract):
+    verdict: str
+    supported: bool
+    missing_citations: List[str]
+    unsupported_claims: List[str]
+    revision_instruction: str
+    deterministic_failures: List[str] = field(default_factory=list)
+    critic_mode: str = "deterministic"
+    llm_critic_valid: Optional[bool] = None
+    critic_schema_error: Optional[str] = None
+    fallback_used: bool = False
+
+
+@dataclass(frozen=True)
+class FinalResult(SerializableContract):
+    question_id: str
+    question: str
+    paper_id: str
+    split: str
+    query_plan: Dict[str, Any]
+    selected_evidence: List[Dict[str, Any]]
+    answer: str
+    citations: List[Dict[str, Any]]
+    critic_verdict: Dict[str, Any]
+    final_status: str
+    retry_count: int
+    agent_traces: List[Dict[str, Any]]
+    model_name: str
+    generation_configuration: Dict[str, Any]
+    runtime: float
+    attempt_history: List[Dict[str, Any]] = field(default_factory=list)

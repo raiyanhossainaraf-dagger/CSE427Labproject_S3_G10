@@ -3,6 +3,13 @@ import pandas as pd
 from typing import List, Dict
 from src.retrieval_metrics import evaluate_retrieval
 
+
+def evaluate_qasper_answers(predictions, references, official_evaluator):
+    """Explicit G5-facing boundary: gold references enter only after inference."""
+    if not callable(official_evaluator):
+        raise TypeError("official_evaluator must be callable")
+    return official_evaluator(predictions, references)
+
 def calculate_recall_at_k(retrieved_ids: List[str], ground_truth_ids: List[str], k: int) -> float:
     """Calculates Recall@K."""
     if not ground_truth_ids:
