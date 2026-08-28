@@ -1,0 +1,27 @@
+{
+    "total_chunks": 39398,
+    "chunks_per_split": {
+        "train": 22906,
+        "test": 9789,
+        "validation": 6703
+    },
+    "token_stats": {
+        "count": 39398.0,
+        "mean": 219.07320168536475,
+        "std": 95.9830038753211,
+        "min": 1.0,
+        "25%": 143.0,
+        "50%": 229.0,
+        "75%": 303.0,
+        "max": 374.0
+    },
+    "is_partial_stats": {
+        "false": 37485,
+        "true": 1913
+    },
+    "chunking_config": {
+        "tokenizer_name": "sentence-transformers/all-MiniLM-L6-v2",
+        "max_tokens": 384,
+        "overlap_tokens": 32
+    }
+}
