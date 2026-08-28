@@ -1,0 +1,109 @@
+{
+  "scope": "G5 validation only",
+  "sample": {
+    "seed": 427,
+    "size": 100,
+    "validation_pool_size": 1005,
+    "unique_papers": 82,
+    "sample_file": "outputs\\tables\\g5_validation_sample.csv"
+  },
+  "configurations": {
+    "dense_single_agent": {
+      "candidate_depth": 50,
+      "top_evidence_sources": 5,
+      "dense_model": "BAAI/bge-small-en-v1.5",
+      "retriever": "paper_scoped_dense",
+      "cross_encoder": null,
+      "evidence_agent": false,
+      "critic_agent": false
+    },
+    "evidence_aware_no_critic": {
+      "candidate_depth": 50,
+      "top_evidence_sources": 5,
+      "dense_model": "BAAI/bge-small-en-v1.5",
+      "retriever": "paper_scoped_hybrid",
+      "cross_encoder": "cross-encoder/ms-marco-MiniLM-L6-v2",
+      "evidence_weights": {
+        "cross_encoder": 0.7,
+        "hybrid": 0.25,
+        "agreement": 0.05
+      },
+      "evidence_agent": true,
+      "critic_agent": false
+    },
+    "full_multi_agent": {
+      "candidate_depth": 50,
+      "top_evidence_sources": 5,
+      "dense_model": "BAAI/bge-small-en-v1.5",
+      "retriever": "paper_scoped_hybrid",
+      "cross_encoder": "cross-encoder/ms-marco-MiniLM-L6-v2",
+      "evidence_weights": {
+        "cross_encoder": 0.7,
+        "hybrid": 0.25,
+        "agreement": 0.05
+      },
+      "agents": [
+        "query",
+        "retrieval",
+        "evidence",
+        "answer",
+        "critic"
+      ],
+      "maximum_revisions": 1,
+      "critic_fallback": "deterministic_accept_after_valid_deterministic_checks"
+    }
+  },
+  "generation_experiment": [
+    {
+      "configuration": "dense_single_agent",
+      "question_count": 100,
+      "official_answer_f1": 0.29542506768400517,
+      "citation_valid_record_count": 100,
+      "citation_valid_record_rate": 1.0,
+      "accepted_first_attempt": 95,
+      "accepted_after_revision": 0,
+      "rejected": 0,
+      "insufficient_evidence_count": 5,
+      "average_evidence_count": 5.0,
+      "average_runtime_seconds": 1.8383514500000002,
+      "total_runtime_seconds": 183.875149,
+      "peak_gpu_memory_mb": 3771.95
+    },
+    {
+      "configuration": "evidence_aware_no_critic",
+      "question_count": 100,
+      "official_answer_f1": 0.2694944183923975,
+      "citation_valid_record_count": 100,
+      "citation_valid_record_rate": 1.0,
+      "accepted_first_attempt": 96,
+      "accepted_after_revision": 0,
+      "rejected": 0,
+      "insufficient_evidence_count": 4,
+      "average_evidence_count": 5.0,
+      "average_runtime_seconds": 1.90007148,
+      "total_runtime_seconds": 190.030627,
+      "peak_gpu_memory_mb": 3771.95
+    },
+    {
+      "configuration": "full_multi_agent",
+      "question_count": 100,
+      "official_answer_f1": 0.2707444183923975,
+      "citation_valid_record_count": 100,
+      "citation_valid_record_rate": 1.0,
+      "accepted_first_attempt": 96,
+      "accepted_after_revision": 2,
+      "rejected": 1,
+      "insufficient_evidence_count": 1,
+      "average_evidence_count": 5.0,
+      "average_runtime_seconds": 3.2485118,
+      "total_runtime_seconds": 324.873856,
+      "peak_gpu_memory_mb": 3771.95
+    }
+  ],
+  "retrieval_results": {
+    "scope": "full validation; separate from 100-question generation experiment",
+    "table": "outputs\\tables\\g5_retrieval_comparison.csv"
+  },
+  "official_evidence_f1_reported": false,
+  "test_split_evaluated": false
+}
