@@ -1,0 +1,13 @@
+{
+    "schema_version": "1.0.0",
+    "chunking_version": "1.0.0",
+    "tokenizer_name": "sentence-transformers/all-MiniLM-L6-v2",
+    "max_tokens": 384,
+    "metadata_template_version": "1.0.0",
+    "long_paragraph_overlap_tokens": 32,
+    "chunk_count": 39398,
+    "paragraph_count": 83087,
+    "chunk_checksum": "0be5eeea217d4272c5b7a39ee02e10b3af8dfe4bdd0a81c31298f792a53c0201",
+    "source_paragraph_checksum": "5ed9c9de852bc3c432d588009a873266fb63694701943bd1d8f6b98a692417c5",
+    "created_with_python": "3.12.6 (tags/v3.12.6:a4a2d2b, Sep  6 2024, 20:11:23) [MSC v.1940 64 bit (AMD64)]"
+}

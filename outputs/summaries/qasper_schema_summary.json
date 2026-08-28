@@ -1,0 +1,29 @@
+{
+    "schema_version": "1.0.0",
+    "table_counts": {
+        "papers": 1585,
+        "sections": 23494,
+        "paragraphs": 83087,
+        "questions": 5049,
+        "answers": 7993,
+        "evidence": 12761,
+        "figures_tables": 11364
+    },
+    "split_counts": {
+        "train": 888,
+        "test": 416,
+        "validation": 281
+    },
+    "answer_types": {
+        "extractive": 4142,
+        "abstractive": 1931,
+        "unanswerable": 810,
+        "yes": 611,
+        "no": 499
+    },
+    "evidence_types": {
+        "text": 11663,
+        "figure_table": 1098
+    },
+    "status": "validated"
+}
