@@ -1,72 +1,48 @@
+"""Deterministic source-aware weighted Reciprocal Rank Fusion."""
 import numpy as np
 import pandas as pd
-from typing import List
-from src.bm25_retrieval import BM25Retriever
-from src.retrieval import retrieve_relevant_chunks
-from sklearn.preprocessing import MinMaxScaler
+from src.retrieval import PREDICTION_COLUMNS
+
+def canonical_source(row):
+    """Map documents to evidence-source identity, deduplicating paragraph chunk variants."""
+    if row.source_type == "chunk" and str(row.paragraph_id): return "paragraph", str(row.paragraph_id)
+    if row.source_type == "section": return "section", str(row.section_id)
+    if row.source_type == "float": return "float", str(row.figure_table_id)
+    return "chunk", str(row.source_id)
+
+def weighted_rrf(bm25, dense, top_k=20, bm25_weight=1.0, dense_weight=1.0, rrf_constant=60):
+    """Fuse canonical sources using weight/(constant + rank)."""
+    if top_k < 1 or rrf_constant < 1 or bm25_weight < 0 or dense_weight < 0: raise ValueError("Invalid RRF configuration")
+    method_rows = {}
+    for name, frame in (("bm25", bm25), ("dense", dense)):
+        chosen = {}
+        for row in frame.sort_values(["rank", "document_id"], kind="stable").itertuples(index=False):
+            key = canonical_source(row)
+            if key not in chosen: chosen[key] = row
+        method_rows[name] = chosen
+    records = []
+    for key in sorted(set(method_rows["bm25"]) | set(method_rows["dense"])):
+        b = method_rows["bm25"].get(key); d = method_rows["dense"].get(key)
+        fused = (bm25_weight / (rrf_constant + int(b.rank)) if b else 0.0) + (dense_weight / (rrf_constant + int(d.rank)) if d else 0.0)
+        representative = min([row for row in (b, d) if row is not None], key=lambda row: (int(row.rank), str(row.document_id)))
+        record = representative._asdict()
+        record.update({"method": "hybrid", "score": fused, "fused_score": fused,
+                       "bm25_score": float(b.score) if b else np.nan, "bm25_rank": int(b.rank) if b else pd.NA,
+                       "dense_score": float(d.score) if d else np.nan, "dense_rank": int(d.rank) if d else pd.NA})
+        records.append(record)
+    output = pd.DataFrame(records)
+    if output.empty: return pd.DataFrame(columns=PREDICTION_COLUMNS)
+    output = output.sort_values(["fused_score", "document_id"], ascending=[False, True], kind="stable").head(top_k).copy()
+    output["rank"] = np.arange(1, len(output) + 1)
+    return output[PREDICTION_COLUMNS]
 
 class HybridRetriever:
-    def __init__(self, bm25_retriever: BM25Retriever, dense_model, dense_index, chunks_df: pd.DataFrame):
-        self.bm25_retriever = bm25_retriever
-        self.dense_model = dense_model
-        self.dense_index = dense_index
-        self.chunks_df = chunks_df
-        self.scaler = MinMaxScaler()
+    def __init__(self, bm25_retriever, dense_retriever, candidate_depth=100, rrf_constant=60, bm25_weight=1.0, dense_weight=1.0):
+        self.bm25 = bm25_retriever; self.dense = dense_retriever; self.candidate_depth = candidate_depth
+        self.rrf_constant = rrf_constant; self.bm25_weight = bm25_weight; self.dense_weight = dense_weight
 
-    def search(self, query: str, top_k: int = 5, alpha: float = 0.5) -> pd.DataFrame:
-        """
-        Performs hybrid search by combining BM25 and Dense retrieval scores.
-        alpha: Weight for dense retrieval (0.0 to 1.0).
-        """
-        # 1. Get BM25 results (get more than top_k for better fusion)
-        bm25_results = self.bm25_retriever.search(query, top_k=min(top_k * 5, len(self.chunks_df)))
-        
-        # 2. Get Dense results
-        dense_results = retrieve_relevant_chunks(
-            query, 
-            self.dense_model, 
-            self.dense_index, 
-            self.chunks_df, 
-            top_k=min(top_k * 5, len(self.chunks_df))
-        )
+    def search_embedding(self, query, query_embedding, paper_id, split, top_k=20, question_id=""):
+        b = self.bm25.search(query, paper_id, split, self.candidate_depth, question_id)
+        d = self.dense.search_embedding(query_embedding, paper_id, split, self.candidate_depth, question_id)
+        return weighted_rrf(b, d, top_k, self.bm25_weight, self.dense_weight, self.rrf_constant)
 
-        # 3. Score Fusion
-        # Create a mapping of chunk_id to fused score
-        # Since FAISS IndexFlatL2 returns distances (lower is better), 
-        # we convert to similarity (higher is better) for fusion.
-        
-        # Normalize scores
-        bm25_scores = bm25_results[['chunk_id', 'similarity_score']].set_index('chunk_id')
-        dense_scores = dense_results[['chunk_id', 'similarity_score']].set_index('chunk_id')
-        
-        # For FAISS L2 distance, lower is better. We'll invert it: similarity = 1 / (1 + distance)
-        dense_scores['similarity_score'] = 1 / (1 + dense_scores['similarity_score'])
-        
-        # Scale scores to [0, 1] for fair fusion
-        if not bm25_scores.empty:
-            bm25_scores['norm_score'] = self.scaler.fit_transform(bm25_scores[['similarity_score']])
-        else:
-            bm25_scores['norm_score'] = 0.0
-            
-        if not dense_scores.empty:
-            dense_scores['norm_score'] = self.scaler.fit_transform(dense_scores[['similarity_score']])
-        else:
-            dense_scores['norm_score'] = 0.0
-
-        # Combine
-        all_ids = list(set(bm25_scores.index) | set(dense_scores.index))
-        fused_results = []
-        
-        for cid in all_ids:
-            b_score = bm25_scores.loc[cid, 'norm_score'] if cid in bm25_scores.index else 0.0
-            d_score = dense_scores.loc[cid, 'norm_score'] if cid in dense_scores.index else 0.0
-            
-            fused_score = alpha * d_score + (1 - alpha) * b_score
-            fused_results.append({'chunk_id': cid, 'similarity_score': fused_score})
-            
-        fused_df = pd.DataFrame(fused_results).sort_values('similarity_score', ascending=False).head(top_k)
-        
-        # Join with metadata
-        final_results = fused_df.merge(self.chunks_df, on='chunk_id')
-        
-        return final_results

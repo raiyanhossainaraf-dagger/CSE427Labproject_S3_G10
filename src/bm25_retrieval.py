@@ -1,64 +1,56 @@
-import pandas as pd
+"""Deterministic BM25 over the unified retrieval corpus, scoped by paper and split."""
 import re
-from typing import List, Dict, Any
+from typing import Dict, List, Tuple
+import numpy as np
+import pandas as pd
 from rank_bm25 import BM25Okapi
+from src.retrieval import format_predictions
 
-def tokenize(text: str) -> List[str]:
-    """
-    Lightweight tokenizer for BM25.
-    Converts to lowercase and splits by non-alphanumeric characters while preserving basic terms.
-    """
-    if not isinstance(text, str):
-        text = str(text)
-    # Lowercase and split by whitespace
-    # Using re.findall to get alphanumeric words, preserving most scientific terms
-    return re.findall(r'\w+', text.lower())
+def tokenize(text: object) -> List[str]:
+    """Lowercase regex tokenization with no downloaded language resources."""
+    return re.findall(r"\w+", str(text).lower(), flags=re.UNICODE)
 
 class BM25Retriever:
-    def __init__(self, chunks_df: pd.DataFrame):
-        """
-        Initializes the BM25 retriever with a dataframe of chunks.
-        """
-        if "text" not in chunks_df.columns:
-            raise ValueError("chunks_df must contain a 'text' column.")
-            
-        self.chunks_df = chunks_df
-        self.corpus = chunks_df["text"].tolist()
-        
-        print(f"Tokenizing corpus for BM25 ({len(self.corpus)} documents)...")
-        self.tokenized_corpus = [tokenize(doc) for doc in self.corpus]
-        
-        try:
-            self.bm25 = BM25Okapi(self.tokenized_corpus)
-        except ImportError:
-            raise ImportError("rank-bm25 is not installed. Run: pip install rank-bm25")
+    """BM25 retriever compatible with the legacy constructor and corpus dataframes."""
+    def __init__(self, corpus_df: pd.DataFrame):
+        if "text" not in corpus_df.columns:
+            raise ValueError("corpus_df must contain a 'text' column")
+        self.corpus_df = corpus_df.reset_index(drop=True).copy()
+        self.chunks_df = self.corpus_df
+        tokens = [tokenize(text) for text in self.corpus_df["text"]]
+        self.bm25 = BM25Okapi(tokens) if len(self.corpus_df) else None
 
     def search(self, query: str, top_k: int = 5) -> pd.DataFrame:
-        """
-        Searches the BM25 index for a given query and returns top-k chunks with metadata.
-        """
-        tokenized_query = tokenize(query)
-        scores = self.bm25.get_scores(tokenized_query)
-        
-        # Get top-k indices
-        top_indices = pd.Series(scores).nlargest(top_k).index
-        
-        results = self.chunks_df.iloc[top_indices].copy()
-        results["similarity_score"] = [scores[i] for i in top_indices]
-        
-        # Ensure consistent column order and required fields
-        return results
+        """Return deterministic results; score ties break by stable document/source ID."""
+        if top_k < 1: raise ValueError("top_k must be positive")
+        if self.bm25 is None:
+            return self.corpus_df.assign(score=pd.Series(dtype=float), rank=pd.Series(dtype=int)).head(0)
+        scores = np.asarray(self.bm25.get_scores(tokenize(query)), dtype=np.float64)
+        result = self.corpus_df.copy(); result["score"] = scores
+        tie = "document_id" if "document_id" in result else ("chunk_id" if "chunk_id" in result else result.columns[0])
+        result = result.sort_values(["score", tie], ascending=[False, True], kind="stable").head(top_k).copy()
+        result.insert(0, "rank", np.arange(1, len(result) + 1))
+        result["similarity_score"] = result["score"]
+        return result
+
+class PaperScopedBM25Retriever:
+    """Lazily cache one small BM25 index per requested (split, paper_id)."""
+    def __init__(self, corpus_df: pd.DataFrame):
+        self.corpus = corpus_df.reset_index(drop=True)
+        self._groups = self.corpus.groupby(["split", "paper_id"], sort=False).indices
+        self._cache: Dict[Tuple[str, str], BM25Retriever] = {}
+
+    def search(self, query: str, paper_id: str, split: str, top_k: int = 20, question_id: str = "") -> pd.DataFrame:
+        key = (str(split), str(paper_id))
+        if key not in self._groups:
+            return format_predictions(pd.DataFrame(), question_id, paper_id, split, "bm25")
+        if key not in self._cache:
+            self._cache[key] = BM25Retriever(self.corpus.iloc[self._groups[key]])
+        return format_predictions(self._cache[key].search(query, top_k), question_id, paper_id, split, "bm25", bm25=True)
 
 def build_bm25_index(chunks_df: pd.DataFrame) -> BM25Retriever:
-    """
-    Helper function to build and return a BM25Retriever instance.
-    """
-    print(f"Building BM25 index for {len(chunks_df)} chunks...")
     return BM25Retriever(chunks_df)
 
-def bm25_search(retriever: BM25Retriever, query: str, chunks_df: pd.DataFrame, top_k: int = 5) -> pd.DataFrame:
-    """
-    Helper function for searching using a BM25Retriever instance.
-    Included for consistency with other retrieval modules.
-    """
+def bm25_search(retriever: BM25Retriever, query: str, chunks_df=None, top_k: int = 5) -> pd.DataFrame:
     return retriever.search(query, top_k=top_k)
+
