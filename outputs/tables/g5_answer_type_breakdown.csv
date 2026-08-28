@@ -1,0 +1,13 @@
+configuration,answer_type,question_count,official_answer_f1
+dense_single_agent,extractive,53,0.29749886982497753
+dense_single_agent,abstractive,25,0.27100266670706835
+dense_single_agent,yes/no,15,0.4
+dense_single_agent,unanswerable,7,0.14285714285714285
+evidence_aware_no_critic,extractive,51,0.28018990093868323
+evidence_aware_no_critic,abstractive,26,0.21768295736026547
+evidence_aware_no_critic,yes/no,16,0.375
+evidence_aware_no_critic,unanswerable,7,0.14285714285714285
+full_multi_agent,extractive,51,0.28018990093868323
+full_multi_agent,abstractive,26,0.22249064966795776
+full_multi_agent,yes/no,16,0.375
+full_multi_agent,unanswerable,7,0.14285714285714285

@@ -1,0 +1,122 @@
+{
+  "scope": "post-hoc G5 validation diagnostics only",
+  "seed": 427,
+  "question_count": 100,
+  "ordered_question_ids_match": true,
+  "test_records_present": false,
+  "official_answer_f1": {
+    "dense_single_agent": 0.29542506768400517,
+    "evidence_aware_no_critic": 0.2694944183923975,
+    "full_multi_agent": 0.2707444183923975
+  },
+  "independent_official_evaluator_answer_f1": {
+    "dense_single_agent": 0.29542506768400517,
+    "evidence_aware_no_critic": 0.2694944183923975,
+    "full_multi_agent": 0.2707444183923975
+  },
+  "saved_g5_answer_f1": {
+    "dense_single_agent": 0.29542506768400517,
+    "evidence_aware_no_critic": 0.2694944183923975,
+    "full_multi_agent": 0.2707444183923975
+  },
+  "aggregate_f1_exactly_reproduced": true,
+  "dense_to_full": {
+    "mean_difference": -0.024680649291607674,
+    "wins": 20,
+    "ties": 50,
+    "losses": 30,
+    "bootstrap_samples": 10000,
+    "bootstrap_seed": 427,
+    "bootstrap_ci_95": [
+      -0.0840735553448266,
+      0.03486583566890395
+    ],
+    "permutation_samples": 10000,
+    "permutation_p_value_two_sided": 0.4186581341865813
+  },
+  "dense_to_full_by_full_official_answer_type": {
+    "abstractive": {
+      "question_count": 26,
+      "mean_f1_difference": -0.04794311370900121,
+      "wins": 6,
+      "ties": 11,
+      "losses": 9
+    },
+    "extractive": {
+      "question_count": 51,
+      "mean_f1_difference": -0.01741589489006673,
+      "wins": 12,
+      "ties": 20,
+      "losses": 19
+    },
+    "unanswerable": {
+      "question_count": 7,
+      "mean_f1_difference": -0.04761904761904762,
+      "wins": 1,
+      "ties": 5,
+      "losses": 1
+    },
+    "yes/no": {
+      "question_count": 16,
+      "mean_f1_difference": 0.0,
+      "wins": 1,
+      "ties": 14,
+      "losses": 1
+    }
+  },
+  "retrieval_recall_at_5_t06": {
+    "dense_single_agent": {
+      "recall_at_5": 0.6418842805939581,
+      "evaluated_questions": 93,
+      "excluded_questions": 7
+    },
+    "evidence_aware_no_critic": {
+      "recall_at_5": 0.6769073220686124,
+      "evaluated_questions": 93,
+      "excluded_questions": 7
+    },
+    "full_multi_agent": {
+      "recall_at_5": 0.6769073220686124,
+      "evaluated_questions": 93,
+      "excluded_questions": 7
+    }
+  },
+  "evidence_source_composition": {
+    "categories": {
+      "chunk": "paragraph",
+      "section": "section",
+      "float": "figure/table"
+    },
+    "totals": {
+      "dense_single_agent": {
+        "dense_single_agent_paragraph_count": 442,
+        "dense_single_agent_section_count": 10,
+        "dense_single_agent_figure_table_count": 48
+      },
+      "evidence_aware_no_critic": {
+        "evidence_aware_no_critic_paragraph_count": 466,
+        "evidence_aware_no_critic_section_count": 6,
+        "evidence_aware_no_critic_figure_table_count": 28
+      },
+      "full_multi_agent": {
+        "full_multi_agent_paragraph_count": 466,
+        "full_multi_agent_section_count": 6,
+        "full_multi_agent_figure_table_count": 28
+      }
+    },
+    "mixed_source_association": {
+      "definition": "full prediction uses more than one of paragraph, section, figure/table",
+      "mixed_question_count": 28,
+      "single_source_question_count": 72,
+      "mean_f1_change_mixed": -0.04498629613882985,
+      "mean_f1_change_single_source": -0.016784008851021274,
+      "point_biserial_correlation_with_f1_change": -0.042036279061190264,
+      "interpretation_constraint": "association only; no causal claim"
+    }
+  },
+  "answer_type_note": "Official max-over-gold-reference type is computed separately for each configuration; paired case tables use the type selected for the full-system official score.",
+  "gold_or_sensitive_content_saved": {
+    "gold_answers": false,
+    "hidden_prompts_or_reasoning": false
+  }
+}

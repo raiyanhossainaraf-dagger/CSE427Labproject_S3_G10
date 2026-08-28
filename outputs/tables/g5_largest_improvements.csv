@@ -1,0 +1,11 @@
+question_id,question,dense_single_agent_f1,full_multi_agent_f1,f1_difference,answer_type,dense_single_agent_paragraph_count,dense_single_agent_section_count,dense_single_agent_figure_table_count,full_multi_agent_paragraph_count,full_multi_agent_section_count,full_multi_agent_figure_table_count
+f697d00a82750b14376fe20a5a2b249e98bebe9b,Which deep learning architecture do they use for sentence segmentation?,0.0,1.0,1.0,extractive,4,1,0,4,0,1
+8748e8f64af57560d124c7b518b853bf2711c13e,Do they report results only on English data?,0.0,1.0,1.0,yes/no,5,0,0,5,0,0
+eda4869c67fe8bbf83db632275f053e7e0241e8c,Which dataset do they use?,0.33333333333333337,1.0,0.6666666666666666,unanswerable,5,0,0,5,0,0
+0602a974a879e6eae223cdf048410b5a0111665e,What baseline approaches does this approach out-perform?,0.0,0.5,0.5,extractive,4,0,1,5,0,0
+aefa333b2cf0a4000cd40566149816f5b36135e7,What evaluation metric do they use?,0.4,0.888888888888889,0.48888888888888893,extractive,5,0,0,5,0,0
+30af1926559079f59b0df055da76a3a34df8336f,what is the source of the data?,0.0,0.4444444444444445,0.4444444444444445,extractive,4,0,1,5,0,0
+c8541ff10c4e0c8e9eb37d9d7ea408d1914019a9,Which datasets are employed for South African languages LID?,0.0,0.42857142857142855,0.42857142857142855,extractive,5,0,0,5,0,0
+7bd6a6ec230e1efb27d691762cc0674237dc7967,what data did they use?,0.0,0.42857142857142855,0.42857142857142855,extractive,3,0,2,4,0,1
+92bb41cf7bd1f7886784796a8220ed5aa07bc49b,What other factors affect the performance?,0.09523809523809522,0.4166666666666667,0.32142857142857145,extractive,5,0,0,5,0,0
+d6e353e0231d09fd5dcba493544d53706f3fe1ab,How is the quality of singing voice measured?,0.07142857142857144,0.30508474576271183,0.23365617433414038,abstractive,4,0,1,5,0,0

@@ -1,0 +1,11 @@
+question_id,question,dense_single_agent_f1,full_multi_agent_f1,f1_difference,answer_type,dense_single_agent_paragraph_count,dense_single_agent_section_count,dense_single_agent_figure_table_count,full_multi_agent_paragraph_count,full_multi_agent_section_count,full_multi_agent_figure_table_count
+f903396d943541a8cc65edefb04ca37814ed30dd,What dataset do they use for analysis?,1.0,0.0,-1.0,unanswerable,5,0,0,5,0,0
+31b92c03d5b9be96abcc1d588d10651703aff716,What was their highest recall score?,1.0,0.0,-1.0,extractive,4,0,1,4,0,1
+5eabfc6cc8aa8a99e6e42514ef9584569cb75dec,Do they evaluate only on English datasets?,1.0,0.0,-1.0,yes/no,4,0,1,5,0,0
+fc77d70c305fa80447b191248aba93da63ac3704,Which datasets are used?,0.896551724137931,0.12121212121212122,-0.7753396029258098,extractive,4,1,0,5,0,0
+a616a3f0d244368ec588f04dfbc37d77fda01b4c,What are the 12 languages covered?,0.588235294117647,0.0,-0.588235294117647,abstractive,4,0,1,3,0,2
+17a1eff7993c47c54eddc7344e7454fbe64191cd,What experiments do they use to quantify the extent of interpretability?,0.6086956521739131,0.0625,-0.5461956521739131,abstractive,4,0,1,5,0,0
+0689904db9b00a814e3109fb1698086370a28fa2,Which text embedding methodologies are used?,0.5,0.0,-0.5,extractive,5,0,0,4,1,0
+b0a18628289146472aa42f992d0db85c200ec64b,What metrics are used in evaluation?,0.4,0.0,-0.4,extractive,5,0,0,5,0,0
+61652a3da85196564401d616d251084a25ab4596,What is the size of the real-life dataset?,0.33333333333333337,0.0,-0.33333333333333337,extractive,4,0,1,5,0,0
+53f74250948015c394e7b8438a2041fdeb330911,What are the deep learning architectures used in the task?,0.3333333333333333,0.0,-0.3333333333333333,extractive,5,0,0,5,0,0
