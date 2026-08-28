@@ -4,6 +4,10 @@ from pathlib import Path
 from dataclasses import dataclass
 from typing import Union
 
+DEFAULT_DENSE_MODEL = "BAAI/bge-small-en-v1.5"
+DEFAULT_EMBEDDING_BATCH_SIZE = 32
+RETRIEVAL_ARTIFACT_VERSION = "retrieval_v2"
+
 @dataclass(frozen=True)
 class ProjectPaths:
     project_root: Path

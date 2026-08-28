@@ -63,6 +63,11 @@ TABLE_SCHEMAS: Dict[str, List[str]] = {
         "source_type", "section_id", "paragraph_id", "chunk_id", "float_id",
         "candidate_count", "normalized_evidence_text"
     ],
+    "retrieval_corpus": [
+        "document_id", "paper_id", "split", "source_type", "source_id",
+        "chunk_id", "paragraph_id", "section_id", "figure_table_id",
+        "title", "section_name", "text", "embedding_text"
+    ],
 }
 
 def validate_table(df: pd.DataFrame, table_name: str) -> None:
@@ -81,6 +86,8 @@ def validate_table(df: pd.DataFrame, table_name: str) -> None:
         id_col = "float_id"
     elif table_name == "evidence_mappings":
         id_col = "mapping_id"
+    elif table_name == "retrieval_corpus":
+        id_col = "document_id"
         
     if id_col in df.columns:
         if not df[id_col].is_unique:

@@ -43,6 +43,7 @@ pytorch_model*.bin
 # Generated embeddings and indexes (prevent new ones, but don't delete existing tracked ones)
 data/processed/*embedding*.npy
 data/processed/faiss_index/
+data/processed/retrieval_v2/
 *.faiss
 
 # Temporary outputs
