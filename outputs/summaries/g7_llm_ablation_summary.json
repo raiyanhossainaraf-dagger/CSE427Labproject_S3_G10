@@ -1,0 +1,122 @@
+{
+  "scope": "frozen-evidence G5 validation generation ablation",
+  "seed": 427,
+  "question_count": 100,
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "test_split_accessed": false,
+  "generation": {
+    "do_sample": false,
+    "max_input_tokens": 4096,
+    "max_new_tokens": 256,
+    "batch_size": 1,
+    "dtype": "float16",
+    "device": "cuda"
+  },
+  "results": [
+    {
+      "configuration": "qwen3_dense_single_agent",
+      "model": "Qwen/Qwen3-4B-Instruct-2507",
+      "question_count": 100,
+      "official_answer_f1": 0.319854675160875,
+      "citation_label_valid_count": 100,
+      "citation_label_valid_rate": 1.0,
+      "accepted_first_attempt": 100,
+      "accepted_after_revision": 0,
+      "rejected": 0,
+      "insufficient": 0,
+      "runtime_per_question_seconds": 5.83156263,
+      "total_runtime_seconds": 585.2104,
+      "peak_gpu_memory_mb": 9023.42
+    },
+    {
+      "configuration": "qwen3_full_multi_agent",
+      "model": "Qwen/Qwen3-4B-Instruct-2507",
+      "question_count": 100,
+      "official_answer_f1": 0.4082184272132053,
+      "citation_label_valid_count": 100,
+      "citation_label_valid_rate": 1.0,
+      "accepted_first_attempt": 89,
+      "accepted_after_revision": 4,
+      "rejected": 7,
+      "insufficient": 0,
+      "runtime_per_question_seconds": 9.84021109,
+      "total_runtime_seconds": 986.446258,
+      "peak_gpu_memory_mb": 9008.56
+    },
+    {
+      "configuration": "qwen2_dense_single_agent",
+      "model": "Qwen/Qwen2.5-1.5B-Instruct",
+      "question_count": 100,
+      "official_answer_f1": 0.29542506768400517,
+      "citation_label_valid_count": 100,
+      "citation_label_valid_rate": 1.0,
+      "accepted_first_attempt": 95,
+      "accepted_after_revision": 0,
+      "rejected": 0,
+      "insufficient": 5,
+      "runtime_per_question_seconds": 1.8383514500000002,
+      "total_runtime_seconds": 183.875149,
+      "peak_gpu_memory_mb": 3771.95
+    },
+    {
+      "configuration": "qwen2_full_multi_agent",
+      "model": "Qwen/Qwen2.5-1.5B-Instruct",
+      "question_count": 100,
+      "official_answer_f1": 0.2707444183923975,
+      "citation_label_valid_count": 100,
+      "citation_label_valid_rate": 1.0,
+      "accepted_first_attempt": 96,
+      "accepted_after_revision": 2,
+      "rejected": 1,
+      "insufficient": 1,
+      "runtime_per_question_seconds": 3.2485118,
+      "total_runtime_seconds": 324.873856,
+      "peak_gpu_memory_mb": 3771.95
+    }
+  ],
+  "paired_comparisons": {
+    "qwen2_dense_single_agent_vs_qwen3_dense_single_agent": {
+      "mean_difference": 0.024429607476869807,
+      "wins": 42,
+      "ties": 30,
+      "losses": 28,
+      "bootstrap_samples": 10000,
+      "bootstrap_seed": 427,
+      "bootstrap_ci_95": [
+        -0.04878415814611686,
+        0.09501264412081427
+      ],
+      "permutation_samples": 10000,
+      "permutation_p_value_two_sided": 0.5098490150984901
+    },
+    "qwen2_full_multi_agent_vs_qwen3_full_multi_agent": {
+      "mean_difference": 0.13747400882080782,
+      "wins": 51,
+      "ties": 26,
+      "losses": 23,
+      "bootstrap_samples": 10000,
+      "bootstrap_seed": 427,
+      "bootstrap_ci_95": [
+        0.0495685217982756,
+        0.2248217011476312
+      ],
+      "permutation_samples": 10000,
+      "permutation_p_value_two_sided": 0.001999800019998
+    },
+    "qwen3_dense_single_agent_vs_qwen3_full_multi_agent": {
+      "mean_difference": 0.08836375205233037,
+      "wins": 40,
+      "ties": 36,
+      "losses": 24,
+      "bootstrap_samples": 10000,
+      "bootstrap_seed": 427,
+      "bootstrap_ci_95": [
+        0.03294533910756293,
+        0.14950672247153504
+      ],
+      "permutation_samples": 10000,
+      "permutation_p_value_two_sided": 0.0018998100189981002
+    }
+  },
+  "gold_fields_in_predictions_or_checkpoints": false
+}

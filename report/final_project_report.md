@@ -2,7 +2,7 @@
 
 ## Abstract
 
-This project evaluates evidence-aware multi-agent RAG over QASPER scientific papers. It unifies paragraph, section, and figure/table sources; combines BM25 and dense retrieval; applies cross-encoder evidence reranking; and coordinates five traceable agents. On 927 evidence-eligible validation questions, evidence-fused reranking achieved Recall@5 0.6580 and nDCG@5 0.5010. On a separate fixed 100-question validation generation sample, the full system achieved Answer F1 0.2707 versus 0.2954 for the dense baseline, with a paired interval crossing zero. The demonstrated benefits are stronger evidence retrieval, fewer insufficient responses, and inspectable traces—not higher Answer F1.
+This project evaluates evidence-aware multi-agent RAG over QASPER scientific papers. It unifies paragraph, section, and figure/table sources; combines BM25 and dense retrieval; applies cross-encoder evidence reranking; and coordinates five traceable agents. On 927 evidence-eligible validation questions, evidence-fused reranking achieved Recall@5 0.6580 and nDCG@5 0.5010. In an exploratory frozen-evidence ablation on 100 validation questions, Qwen3 full multi-agent achieved Answer F1 0.4082 versus 0.3199 for Qwen3 dense single-agent. The original Qwen2.5 results remain the baseline.
 
 ## Introduction
 
@@ -36,11 +36,11 @@ The corpus unifies paragraph chunks, sections, and figures/tables. BM25 supplies
 
 ## Multi-agent architecture
 
-The Query Agent normalizes questions and identifies response style. Retrieval obtains paper-scoped candidates. Evidence reranks and labels E1–E5. Answer prompts `Qwen/Qwen2.5-1.5B-Instruct` using selected evidence. Critic applies deterministic checks and bounded model review with at most one revision. Public traces record statuses and decisions without exposing hidden reasoning.
+The Query Agent normalizes questions and identifies response style. Retrieval obtains paper-scoped candidates. Evidence reranks and labels E1–E5. The original baseline prompts `Qwen/Qwen2.5-1.5B-Instruct`; the final recommended Colab demonstration explicitly uses `Qwen/Qwen3-4B-Instruct-2507`. Critic applies deterministic checks and bounded model review with at most one revision. Public traces record statuses and decisions without exposing hidden reasoning.
 
 ## Experimental setup
 
-Experiments use seed 427. Qwen generation is greedy (`do_sample=False`), `max_new_tokens=256`, batch size 1, and CUDA FP16 where CUDA is available. Full-validation retrieval and 100-question generation are distinct scopes. The final notebook loads committed results instead of rerunning the expensive generation experiment.
+Experiments use seed 427. Qwen generation is greedy (`do_sample=False`), `max_new_tokens=256`, batch size 1, and CUDA FP16. Qwen3 requires `transformers>=4.51.0`; the final Colab workflow requires CUDA. Full-validation retrieval and 100-question generation are distinct scopes. The final notebook loads committed results instead of rerunning the expensive generation experiment; full reproduction is directed to `CSE427_LLM_Ablation.ipynb`.
 
 ## Results
 
@@ -54,27 +54,29 @@ Experiments use seed 427. Qwen generation is greedy (`do_sample=False`), `max_ne
 
 ### Fixed 100-question validation generation sample
 
-| Configuration | Answer F1 | Citation-label validity | Insufficient |
+| Model / configuration | Answer F1 | Citation-label validity | Runtime/question |
 |---|---:|---:|---:|
-| Dense single-agent | 0.2954 | 100% | 5 |
-| Evidence-aware | 0.2695 | 100% | 4 |
-| Full multi-agent | 0.2707 | 100% | 1 |
+| Qwen2.5 dense single-agent | 0.2954 | 100% | 1.8384 s |
+| Qwen2.5 evidence-aware diagnostic | 0.2695 | 100% | — |
+| Qwen2.5 full multi-agent | 0.2707 | 100% | 3.2485 s |
+| Qwen3 dense single-agent | 0.3199 | 100% | 5.8316 s |
+| Qwen3 full multi-agent | **0.4082** | 100% | 9.8402 s |
 
 Citation-label validity only verifies that emitted labels reference selected evidence; it does not establish semantic support.
 
 ## Statistical diagnostic
 
-Full minus dense Answer F1 is −2.47 percentage points with 20 wins, 50 ties, and 30 losses. A 10,000-sample bootstrap gives a 95% CI of −8.41 to +3.49 points; a 10,000-sample paired permutation diagnostic gives p = 0.419. The interval includes zero and the diagnostic is not statistically significant.
+On the fixed 100-question validation sample, the Qwen3 full multi-agent system achieved 40.82% Answer F1 compared with 31.99% for the Qwen3 dense single-agent baseline. The paired difference was +8.84 percentage points, with a 95% bootstrap confidence interval of +3.29 to +14.95 points and p=0.0019. Wins/ties/losses were 40/36/24.
+
+Qwen3 full minus Qwen2.5 full was +13.75 points (95% CI +4.96 to +22.48; p=0.0020). Qwen3 dense minus Qwen2.5 dense was +2.44 points, but its interval includes zero (p=0.5098).
 
 ## Discussion
 
-The full system does not improve mean Answer F1 over the dense baseline on the fixed sample. It reduces insufficient responses from five to one and provides inspectable evidence and citation traces. Separately, evidence-fused ranking improves Recall@5 on full-validation retrieval.
-
-The full multi-agent system produced statistically comparable Answer F1 to the dense single-agent baseline on the fixed 100-question sample, while achieving higher evidence retrieval Recall@5, fewer insufficient responses, traceable evidence selection, and validated citation labels.
+The results do not show that every multi-agent/model combination improves F1: preserved Qwen2.5 full (0.2707) is below Qwen2.5 dense (0.2954). The stronger Qwen3 generator was better able to use the evidence-aware pipeline on this fixed exploratory sample. Separately, evidence-fused ranking improves Recall@5 on full-validation retrieval.
 
 ## Limitations
 
-The generation sample is not full-validation generation. QASPER is domain-specific. Answer F1 is incomplete, and citation-label validity is structural. Retrieval improvements lack a paired significance test, so no retrieval significance claim is made. Model downloads, dense indexing, and generation require substantial compute.
+This is an exploratory validation ablation, not test-set confirmation, and covers only 100 validation questions. Citation validity is structural rather than semantic. Seven Qwen3 full-system records were rejected. Qwen3 full takes 9.8402 seconds/question, and both Qwen3 configurations peak at approximately 9 GB GPU memory; local 8 GB FP16 execution is not recommended. QASPER is domain-specific, Answer F1 is incomplete, and retrieval improvements lack a paired significance test. The test split remains untouched.
 
 ## Ethical and reproducibility considerations
 
@@ -82,4 +84,4 @@ Generated answers are not authoritative scientific conclusions and should be che
 
 ## Conclusion
 
-Evidence-aware reranking improves evidence retrieval and the five-agent design yields fewer insufficient outputs and greater traceability. The generation evidence does not justify claiming higher Answer F1; it supports statistical comparability on the fixed sample alongside evidence-access benefits.
+Evidence-aware reranking improves evidence retrieval and the five-agent design provides traceability. The Qwen3 ablation supports higher full-system Answer F1 than its Qwen3 dense baseline on this fixed validation sample, while the Qwen2.5 baseline cautions against generalizing that result to every generator or multi-agent combination.

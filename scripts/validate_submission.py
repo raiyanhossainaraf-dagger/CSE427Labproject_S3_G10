@@ -25,6 +25,9 @@ REQUIRED = [
     "outputs/summaries/g5_diagnostic_summary.json", "outputs/summaries/g5_experiment_summary.json",
     "outputs/predictions/g5_dense_single_agent.json", "outputs/predictions/g5_evidence_aware.json",
     "outputs/predictions/g5_full_multi_agent.json",
+    "outputs/predictions/g7_qwen3_dense_single_agent.json", "outputs/predictions/g7_qwen3_full_multi_agent.json",
+    "outputs/tables/g7_llm_ablation.csv", "outputs/tables/g7_llm_paired_diagnostics.csv",
+    "outputs/summaries/g7_llm_ablation_summary.json",
     "figures/retrieval_comparison.png", "figures/answer_f1_comparison.png",
     "figures/runtime_comparison.png", "figures/answer_type_diagnostic.png",
 ]
@@ -34,12 +37,18 @@ SECTIONS = [
     "Paragraph-aware chunking", "Unified paragraph/section/figure-table retrieval corpus",
     "Dense index construction", "BM25, dense, hybrid RRF and evidence-aware reranking",
     "Query, Retrieval, Evidence, Answer and Critic Agents", "Small real end-to-end validation demonstration",
-    "Questions, E1–E5 evidence", "Saved G5 results", "comparison charts",
+    "Questions, E1–E5 evidence", "Saved G5 baseline and G7 Qwen3 results", "comparison charts",
     "Paired statistical diagnostic", "Limitations, reproducibility and conclusion",
 ]
 CONTROLS = {"QUICK_DEMO": "True", "RUN_FULL_GENERATION": "False",
             "REBUILD_INDEX_IF_MISSING": "True", "DEMO_QUESTION_COUNT": "3"}
 PREDICTION_FILES = ["g5_dense_single_agent.json", "g5_evidence_aware.json", "g5_full_multi_agent.json"]
+G7_PREDICTION_FILES = ["g7_qwen3_dense_single_agent.json", "g7_qwen3_full_multi_agent.json"]
+QWEN3_MODEL = "Qwen/Qwen3-4B-Instruct-2507"
+G7_F1 = {"qwen3_dense_single_agent": .319854675160875,
+         "qwen3_full_multi_agent": .4082184272132053,
+         "qwen2_dense_single_agent": .29542506768400517,
+         "qwen2_full_multi_agent": .2707444183923975}
 
 
 def tracked_files(root: Path) -> list[Path]:
@@ -78,6 +87,10 @@ def validate(root: Path = ROOT) -> list[str]:
     if re.search(r"(?i)(?:(?<![A-Za-z])[A-Z]:[\\/]|[\\/](?:Users|home)[\\/])", notebook_text):
         errors.append("notebook contains an absolute local path")
     if REPO_URL not in notebook_text: errors.append("notebook repository URL is incorrect or absent")
+    if QWEN3_MODEL not in notebook_text: errors.append("notebook does not explicitly use the recommended Qwen3 model")
+    if "transformers>=4.51.0" not in notebook_text: errors.append("notebook does not require transformers>=4.51.0")
+    if not re.search(r"(?i)cuda.*required|required.*cuda", notebook_text):
+        errors.append("notebook does not state that CUDA is required")
 
     secret_pattern = re.compile(r"(?i)(?:api[_-]?key|access[_-]?token|secret)\s*[=:]\s*['\"][A-Za-z0-9_\-]{12,}")
     for path in [notebook_path, root / "README.md", root / "report/final_project_report.md"]:
@@ -85,7 +98,7 @@ def validate(root: Path = ROOT) -> list[str]:
             errors.append(f"possible secret/token in {path.relative_to(root).as_posix()}")
 
     forbidden_gold = {"gold", "gold_answer", "gold_answers", "gold_evidence", "reference_answer", "reference_answers"}
-    for filename in PREDICTION_FILES:
+    for filename in PREDICTION_FILES + G7_PREDICTION_FILES:
         path = root / "outputs/predictions" / filename
         if not path.is_file(): continue
         payload = json.loads(path.read_text(encoding="utf-8"))
@@ -97,6 +110,48 @@ def validate(root: Path = ROOT) -> list[str]:
             errors.append(f"non-validation prediction in {filename}")
 
     sample_path = root / "outputs/tables/g5_validation_sample.csv"
+    g7_summary_path = root / "outputs/summaries/g7_llm_ablation_summary.json"
+    g7_table_path = root / "outputs/tables/g7_llm_ablation.csv"
+    g7_diag_path = root / "outputs/tables/g7_llm_paired_diagnostics.csv"
+    if g7_summary_path.is_file() and g7_table_path.is_file() and g7_diag_path.is_file():
+        summary = json.loads(g7_summary_path.read_text(encoding="utf-8"))
+        table = pd.read_csv(g7_table_path).set_index("configuration")
+        results = {row["configuration"]: row for row in summary.get("results", [])}
+        if summary.get("question_count") != 100 or summary.get("test_split_accessed") is not False:
+            errors.append("G7 scope is not exactly 100 validation questions with test access disabled")
+        if summary.get("model") != QWEN3_MODEL: errors.append("G7 summary model mismatch")
+        for name, expected in G7_F1.items():
+            if name not in results or name not in table.index:
+                errors.append(f"missing G7 result: {name}"); continue
+            if abs(float(results[name]["official_answer_f1"]) - expected) > 1e-12:
+                errors.append(f"G7 summary Answer F1 mismatch: {name}")
+            if abs(float(table.loc[name, "official_answer_f1"]) - expected) > 1e-12:
+                errors.append(f"G7 table Answer F1 mismatch: {name}")
+        expected_rows = {
+            "qwen3_dense_single_agent": (100, 0, 0, 0, 5.83156263, 9023.42),
+            "qwen3_full_multi_agent": (89, 4, 7, 0, 9.84021109, 9008.56),
+        }
+        for name, values in expected_rows.items():
+            row = results.get(name, {})
+            actual = tuple(row.get(key) for key in ("accepted_first_attempt", "accepted_after_revision",
+                           "rejected", "insufficient", "runtime_per_question_seconds", "peak_gpu_memory_mb"))
+            if actual != values or row.get("citation_label_valid_rate") != 1.0:
+                errors.append(f"G7 aggregate metrics mismatch: {name}")
+        expected_pairs = {
+            "qwen3_dense_single_agent_vs_qwen3_full_multi_agent": (.08836375205233037, 40, 36, 24, .03294533910756293, .14950672247153504, .0018998100189981002),
+            "qwen2_full_multi_agent_vs_qwen3_full_multi_agent": (.13747400882080782, 51, 26, 23, .0495685217982756, .2248217011476312, .001999800019998),
+            "qwen2_dense_single_agent_vs_qwen3_dense_single_agent": (.024429607476869807, 42, 30, 28, -.04878415814611686, .09501264412081427, .5098490150984901),
+        }
+        comparisons = summary.get("paired_comparisons", {})
+        for name, values in expected_pairs.items():
+            row = comparisons.get(name, {}); ci = row.get("bootstrap_ci_95", [None, None])
+            actual = (row.get("mean_difference"), row.get("wins"), row.get("ties"), row.get("losses"),
+                      ci[0], ci[1], row.get("permutation_p_value_two_sided"))
+            if actual != values: errors.append(f"G7 paired metrics mismatch: {name}")
+        diagnostics = pd.read_csv(g7_diag_path)
+        if len(diagnostics) != 300 or diagnostics.question_id.nunique() != 100:
+            errors.append("G7 paired diagnostics must contain three comparisons over 100 questions")
+
     if sample_path.is_file():
         sample = pd.read_csv(sample_path)
         if len(sample) != 100 or sample.question_id.nunique() != 100: errors.append("sample is not exactly 100 unique questions")

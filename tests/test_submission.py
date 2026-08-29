@@ -21,7 +21,9 @@ def test_final_notebook_is_valid_and_unexecuted():
 
 def test_saved_inference_has_no_gold_fields():
     forbidden = {"gold", "gold_answer", "gold_answers", "gold_evidence", "reference_answer", "reference_answers"}
-    for path in (ROOT / "outputs/predictions").glob("g5_*.json"):
+    paths = list((ROOT / "outputs/predictions").glob("g5_*.json")) + list(
+        (ROOT / "outputs/predictions").glob("g7_*.json"))
+    for path in paths:
         payload = json.loads(path.read_text(encoding="utf-8"))
         keys = set()
         stack = [payload]
@@ -31,6 +33,32 @@ def test_saved_inference_has_no_gold_fields():
                 keys.update(str(key).lower() for key in value); stack.extend(value.values())
             elif isinstance(value, list): stack.extend(value)
         assert not forbidden.intersection(keys), path
+
+
+def test_g7_exact_metrics_and_validation_scope():
+    summary = json.loads((ROOT / "outputs/summaries/g7_llm_ablation_summary.json").read_text(encoding="utf-8"))
+    assert summary["question_count"] == 100
+    assert summary["test_split_accessed"] is False
+    assert summary["model"] == "Qwen/Qwen3-4B-Instruct-2507"
+    results = {row["configuration"]: row for row in summary["results"]}
+    assert results["qwen3_dense_single_agent"]["official_answer_f1"] == .319854675160875
+    assert results["qwen3_full_multi_agent"]["official_answer_f1"] == .4082184272132053
+    assert results["qwen3_full_multi_agent"]["accepted_first_attempt"] == 89
+    assert results["qwen3_full_multi_agent"]["accepted_after_revision"] == 4
+    assert results["qwen3_full_multi_agent"]["rejected"] == 7
+    for filename in ("g7_qwen3_dense_single_agent.json", "g7_qwen3_full_multi_agent.json"):
+        payload = json.loads((ROOT / "outputs/predictions" / filename).read_text(encoding="utf-8"))
+        assert payload["split"] == "validation" and len(payload["predictions"]) == 100
+        assert all(row["split"] == "validation" for row in payload["predictions"])
+
+
+def test_final_notebook_qwen3_colab_contract():
+    text = (ROOT / "CSE427_Final_Project.ipynb").read_text(encoding="utf-8")
+    assert "Qwen/Qwen3-4B-Instruct-2507" in text
+    assert "transformers>=4.51.0" in text
+    assert "CUDA is required" in text
+    assert "QUICK_DEMO = True" in text
+    assert "RUN_FULL_GENERATION = False" in text
 
 
 def test_final_figures_are_nonempty():

@@ -18,7 +18,7 @@ This CSE427 project studies evidence-aware retrieval-augmented generation (RAG) 
 
 ## Installation and Colab
 
-Python 3.10+ and CUDA are recommended. The exact requested models are used; loading failures are reported rather than silently replaced.
+Python 3.10+ is required. The final Colab demonstration requires CUDA and `transformers>=4.51.0`; loading failures are reported rather than silently replaced.
 
 ```bash
 git clone https://github.com/raiyanhossainaraf-dagger/CSE427Labproject_S3_G10.git
@@ -33,7 +33,8 @@ For Colab, open the badge and run all cells. The notebook installs `requirements
 
 - Embeddings: `BAAI/bge-small-en-v1.5`
 - Reranking: `cross-encoder/ms-marco-MiniLM-L6-v2`
-- Generation: `Qwen/Qwen2.5-1.5B-Instruct`
+- Backend compatibility default and original baseline: `Qwen/Qwen2.5-1.5B-Instruct`
+- Recommended final Colab generator: `Qwen/Qwen3-4B-Instruct-2507`
 - Seed 427; greedy generation; `max_new_tokens=256`; batch size 1; CUDA FP16 for Qwen when CUDA is available.
 
 ## Dataset and artifact policy
@@ -52,7 +53,7 @@ python scripts/validate_submission.py
 python -m pytest -q
 ```
 
-The final notebook defaults to `QUICK_DEMO=True`, `RUN_FULL_GENERATION=False`, `REBUILD_INDEX_IF_MISSING=True`, and `DEMO_QUESTION_COUNT=3`. Enabling the 100-question generation run is optional and expensive; committed results are displayed by default.
+The final notebook defaults to `QUICK_DEMO=True`, `RUN_FULL_GENERATION=False`, `REBUILD_INDEX_IF_MISSING=True`, and `DEMO_QUESTION_COUNT=3`. It explicitly uses Qwen3 for the small live CUDA demonstration and only displays the committed 100-question results. Full ablation reproduction is isolated in `CSE427_LLM_Ablation.ipynb`.
 
 ## Verified results
 
@@ -66,28 +67,31 @@ Full-validation retrieval covers 927 evidence-eligible validation questions:
 
 Generation uses a separate fixed deterministic 100-question validation sample:
 
-| Configuration | Answer F1 | Citation-label validity | Insufficient |
-|---|---:|---:|---:|
-| Dense single-agent | 0.2954 | 100% | 5 |
-| Evidence-aware | 0.2695 | 100% | 4 |
-| Full multi-agent | 0.2707 | 100% | 1 |
+| Model / configuration | Answer F1 | Citation-label validity | Runtime/question | Outcome counts |
+|---|---:|---:|---:|---|
+| Qwen2.5 dense single-agent (original baseline) | 0.2954 | 100% | 1.8384 s | 5 insufficient |
+| Qwen2.5 evidence-aware (original diagnostic) | 0.2695 | 100% | — | 4 insufficient |
+| Qwen2.5 full multi-agent (original baseline) | 0.2707 | 100% | 3.2485 s | 1 insufficient |
+| Qwen3 dense single-agent | 0.3199 | 100% | 5.8316 s | 100 accepted |
+| Qwen3 full multi-agent | **0.4082** | 100% | 9.8402 s | 89 first-attempt, 4 revised, 7 rejected |
 
 Citation-label validity is structural—it confirms labels refer to selected evidence, not that citations are semantically correct.
 
 ## Statistical interpretation
 
-Full minus dense Answer F1 is −2.47 percentage points, with 20/50/30 wins/ties/losses. The bootstrap 95% CI is −8.41 to +3.49 points and paired permutation p = 0.419.
+On the fixed 100-question validation sample, the Qwen3 full multi-agent system achieved 40.82% Answer F1 compared with 31.99% for the Qwen3 dense single-agent baseline. The paired difference was +8.84 percentage points, with a 95% bootstrap confidence interval of +3.29 to +14.95 points and p=0.0019.
 
-> The full multi-agent system produced statistically comparable Answer F1 to the dense single-agent baseline on the fixed 100-question sample, while achieving higher evidence retrieval Recall@5, fewer insufficient responses, traceable evidence selection, and validated citation labels.
+This does not mean every multi-agent/model combination improves F1: the preserved Qwen2.5 full result (0.2707) is below its dense baseline (0.2954). The exploratory ablation indicates that the stronger Qwen3 generator was better able to use the evidence-aware pipeline. Qwen3 full also exceeded Qwen2.5 full by 13.75 points (95% CI +4.96 to +22.48, p=0.0020); Qwen3 dense exceeded Qwen2.5 dense by 2.44 points, but its CI includes zero (p=0.5098).
 
 No retrieval significance is claimed because no paired retrieval significance test was reported.
 
 ## Limitations
 
-- The 100-question result is sampled validation generation, not full-validation generation.
-- Full-system Answer F1 is not higher than the dense baseline on that sample.
+- This is an exploratory validation ablation, not test-set confirmation, and it uses only 100 validation questions; the test split remains untouched.
 - Structural citation validity is not semantic entailment or factuality.
-- QASPER is domain-specific; real generation and index building require substantial compute, and CPU execution is slow.
+- Seven Qwen3 full-system records were rejected.
+- Qwen3 full is slower (9.8402 s/question) and both Qwen3 configurations used approximately 9 GB peak GPU memory. Local 8 GB FP16 execution is not recommended; use a suitable Colab CUDA GPU.
+- QASPER is domain-specific, and Answer F1 does not capture every aspect of answer quality.
 
 ## Repository structure
 
