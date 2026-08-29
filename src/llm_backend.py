@@ -60,13 +60,14 @@ class TransformersLLMBackend:
 
     def __init__(self, model_name: str = DEFAULT_MODEL_NAME, max_new_tokens: int = 256,
                  input_token_limit: int = 4096, device: str | None = None,
-                 local_files_only: bool = False):
+                 local_files_only: bool = False, seed: int = 427):
         if max_new_tokens < 1 or input_token_limit < 128:
             raise ValueError("invalid generation limits")
         self.model_name = model_name
         self.input_token_limit = input_token_limit
         self.requested_device = device
         self.local_files_only = bool(local_files_only)
+        self.seed = int(seed)
         self.generation_config = {"do_sample": False, "max_new_tokens": max_new_tokens, "batch_size": 1}
 
     @property
@@ -84,9 +85,11 @@ class TransformersLLMBackend:
                 import torch
                 from transformers import AutoModelForCausalLM, AutoTokenizer
                 device = self.requested_device or ("cuda" if torch.cuda.is_available() else "cpu")
+                if self.requested_device == "cuda" and not torch.cuda.is_available():
+                    raise RuntimeError("CUDA was explicitly requested but is not available")
                 kwargs: Dict[str, Any] = {"low_cpu_mem_usage": True}
                 if device == "cuda":
-                    kwargs.update({"dtype": torch.float16})
+                    kwargs.update({"torch_dtype": torch.float16})
                 tokenizer = AutoTokenizer.from_pretrained(
                     self.model_name, local_files_only=self.local_files_only)
                 model = AutoModelForCausalLM.from_pretrained(
@@ -110,6 +113,9 @@ class TransformersLLMBackend:
     def generate(self, prompt: str) -> str:
         loaded = self._load()
         import torch
+        torch.manual_seed(self.seed)
+        if loaded.device == "cuda":
+            torch.cuda.manual_seed_all(self.seed)
         rendered = loaded.tokenizer.apply_chat_template(
             [{"role": "user", "content": prompt}], tokenize=False, add_generation_prompt=True)
         encoded = loaded.tokenizer(rendered, return_tensors="pt", truncation=True,

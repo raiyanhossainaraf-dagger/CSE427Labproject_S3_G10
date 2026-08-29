@@ -2,6 +2,7 @@
 
 # LLM inference and quantization (optional)
 accelerate>=1.0.0
+transformers>=4.51.0
 sentencepiece
 safetensors
 # bitsandbytes is primarily for Linux/CUDA; usage on Windows may require specific wheels or WSL
